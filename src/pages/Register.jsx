@@ -1,17 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.svg';
 
 const Register = () => {
 
+    const [values, setValues] = useState({
+        userName: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+    const [error, setError] = useState('');
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert('form');
-    };
-    const handleChange = (event) => {
+        if (handleError()) {
+            setError('');
+            console.log(values);
+        }
 
     };
+
+    const handleError = () => {
+        const { userName, email, password, confirmPassword } = values;
+
+        if (password.length < 6) {
+            setError('Password should be at least 6 character');
+            return;
+        }
+        if (password !== confirmPassword) {
+            setError("password and confirm password should be match");
+            return;
+        } return true;
+    };
+
+
+    const handleChange = (event) => {
+
+        setValues({ ...values, [event.target.name]: event.target.value });
+    };
+
+
+
+
     return (
         <>
             <FromContainer>
@@ -20,9 +52,11 @@ const Register = () => {
                         <img src={logo} alt="" />
                         <h2>brand</h2>
                     </div>
-                    <input type="text" placeholder='Username' name='username' onChange={(e) => handleChange(e)} />
+                    <input type="text" placeholder='Username' name='userName' onChange={(e) => handleChange(e)} />
                     <input type="email" placeholder='Email' name='email' onChange={(e) => handleChange(e)} />
                     <input type="password" placeholder='Password' name='password' onChange={(e) => handleChange(e)} />
+                    <input type="password" placeholder='Confirm Password' name='confirmPassword' onChange={(e) => handleChange(e)} />
+                    <p >{error}</p>
                     <button type='submit'> Create User</button>
                     <span>
                         Already have an account? Please <Link to='/login'>Login</Link>
