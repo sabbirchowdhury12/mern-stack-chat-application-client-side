@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.svg';
+import axios from 'axios';
+import { registerRoute } from '../utilities/APIRoutes';
+import toast from 'react-hot-toast';
 
 const Register = () => {
 
@@ -12,18 +15,40 @@ const Register = () => {
         confirmPassword: ""
     });
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+
+    //handle submit---------
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (handleError()) {
             setError('');
-            console.log(values);
+            const { userName, email, password } = values;
+
+            const { data } = await axios.post(registerRoute, {
+                userName,
+                email,
+                password
+            });
+
+
+            if (data.status === false) {
+                toast.error(data.message);
+            }
+            if (data.status === true) {
+                toast.success('suucees');
+                localStorage.setItem('Chat-App', JSON.stringify(data.user));
+                navigate('/');
+            }
+
         }
 
     };
 
+
+    //handle password error----------
     const handleError = () => {
-        const { userName, email, password, confirmPassword } = values;
+        const { password, confirmPassword } = values;
 
         if (password.length < 6) {
             setError('Password should be at least 6 character');
@@ -36,6 +61,7 @@ const Register = () => {
     };
 
 
+    //handle user data/value--------------
     const handleChange = (event) => {
 
         setValues({ ...values, [event.target.name]: event.target.value });
