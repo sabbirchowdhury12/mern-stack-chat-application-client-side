@@ -5,6 +5,7 @@ import logo from '../assets/logo.svg';
 import axios from 'axios';
 import { loginRoute } from '../utilities/APIRoutes';
 import toast from 'react-hot-toast';
+import { useEffect } from 'react';
 
 const Login = () => {
 
@@ -17,12 +18,17 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-
+    //get local storage item
+    useEffect(() => {
+        if (localStorage.getItem('Chat-App-User')) {
+            navigate('/');
+        }
+    }, []);
     //handle submit---------
     const handleSubmit = async (event) => {
+
         event.preventDefault();
         const { userName, email, password } = values;
-        console.log(values);
 
         const { data } = await axios.post(loginRoute, {
             userName,
@@ -30,15 +36,13 @@ const Login = () => {
             password
         });
 
-
         if (data.status === false) {
             toast.error(data.message);
         }
         if (data.status === true) {
             console.log(data);
             toast.success('suucees');
-            // localStorage.setItem('Chat-App', JSON.stringify(data.user));
-            // navigate('/');
+            localStorage.setItem('Chat-App-User', JSON.stringify(data.user));
         }
 
 
@@ -62,8 +66,8 @@ const Login = () => {
                         <img src={logo} alt="" />
                         <h2>brand</h2>
                     </div>
-                    <input type="text" placeholder='Username' name='userName' onChange={(e) => handleChange(e)} />
-                    <input type="password" placeholder='Password' name='password' onChange={(e) => handleChange(e)} />
+                    <input type="text" placeholder='Username' name='userName' onChange={(e) => handleChange(e)} required />
+                    <input type="password" placeholder='Password' name='password' onChange={(e) => handleChange(e)} required />
                     <button type='submit'> Login</button>
                     <span>
                         Don't have any account? Please <Link to='/register'>Register.</Link>

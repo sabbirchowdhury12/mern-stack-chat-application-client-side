@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.svg';
@@ -17,6 +17,13 @@ const Register = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+
+    //get local storage item
+    useEffect(() => {
+        if (localStorage.getItem('Chat-App-User')) {
+            navigate('/');
+        }
+    }, []);
 
     //handle submit---------
     const handleSubmit = async (event) => {
@@ -37,7 +44,7 @@ const Register = () => {
             }
             if (data.status === true) {
                 toast.success('suucees');
-                localStorage.setItem('Chat-App', JSON.stringify(data.user));
+                localStorage.setItem('Chat-App-User', JSON.stringify(data.user));
                 navigate('/');
             }
 
