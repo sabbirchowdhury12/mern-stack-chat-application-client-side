@@ -6,6 +6,7 @@ import { Buffer } from 'buffer';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 import { setProfileRoute } from '../utilities/APIRoutes';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
 
@@ -13,7 +14,16 @@ const Profile = () => {
   const [selectedProfile, setSeletedProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const api = `https://api.multiavatar.com`;
+  const navigate = useNavigate();
 
+  // check user available or not
+  useEffect(() => {
+    if (!localStorage.getItem('Chat-App-User')) {
+      navigate('/login');
+    }
+  });
+
+  //set profile and user in local storage
   const setProfile = async () => {
     if (selectedProfile === null) {
       toast.error('Please select a picture');
@@ -29,15 +39,16 @@ const Profile = () => {
         user.isprofileImageSet = true;
         user.profileImage = data.profile;
         localStorage.setItem('Chat-App-User', JSON.stringify(user));
+        navigate('/');
       }
       else {
         toast.error('something wrong please try again');
       }
 
     }
-
   };
 
+  //load random avartar
   useEffect(() => {
     return async () => {
       const data = [];
@@ -46,7 +57,7 @@ const Profile = () => {
           `${api}/${Math.round(Math.random() * 1000)}`,
         );
         // console.log(image);
-        const buffer = new Buffer(image.data);
+        const buffer = new Buffer.from(image.data);
         // console.log(buffer);
         data.push(buffer.toString("base64"));
       }
