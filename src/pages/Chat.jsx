@@ -1,9 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import ChatContact from '../components/ChatContact';
+import ChatSheet from '../components/ChatSheet';
+import { allUsersRoute } from '../utilities/APIRoutes';
 
 
 const Chat = () => {
+
+    const [currentUser, SetCurrentUser] = useState(JSON.parse(localStorage.getItem('Chat-App-User')));
+    const [contacts, setContacts] = useState([]);
+    const [currentChatUser, setCurrentChatUser] = useState(undefined);
+    const navigate = useNavigate();
+
+
+    // console.log(currentUser);
+    //check user is availe or not
+    useEffect(() => {
+        if (!currentUser) {
+            navigate('/login');
+        }
+    }, []);
+
+
+    useEffect(() => {
+        // declare the data fetching function
+        const fetchData = async () => {
+            if (currentUser) {
+                const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+                setContacts(data.data);
+            };
+
+        };
+        // call the function
+        fetchData()
+            // make sure to catch any error
+            .catch(console.error);
+    }, [currentUser]);
+
+
     return (
         <div>
             <Link to='/register'>Register</Link>
@@ -11,11 +47,15 @@ const Chat = () => {
             <Link to='/profile'>profile</Link>
 
             <>
-                <Container>
-                    <div className="container">
+                {contacts.length &&
+                    <Container>
+                        <div className="container">
+                            <ChatContact currentUser={currentUser} setCurrentChatUser={setCurrentChatUser} contacts={contacts} />
+                            <ChatSheet currentChatUser={currentChatUser} />
+                        </div>
 
-                    </div>
-                </Container>
+                    </Container>
+                }
             </>
         </div>
     );

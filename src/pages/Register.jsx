@@ -45,7 +45,7 @@ const Register = () => {
             if (data.status === true) {
                 toast.success('suucees');
                 localStorage.setItem('Chat-App-User', JSON.stringify(data.user));
-                navigate('/');
+                navigate('/profile');
             }
 
         }
