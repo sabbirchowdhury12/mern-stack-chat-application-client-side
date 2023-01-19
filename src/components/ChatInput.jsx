@@ -6,27 +6,47 @@ import Picker from "emoji-picker-react";
 
 const ChatInput = ({ handleSendMessage }) => {
 
-    // 
+  const [emojPicker, setEmojPicker] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleEmojPicker = async () => {
+    setEmojPicker(!emojPicker);
+  };
+
+  const handleEmojiMessage = async (emoji) => {
+    console.log(message);
+    let emojis = message;
+    emojis += emoji.emoji;
+    console.log(emojis);
+    setMessage(emojis);
+  };
 
 
-    return (
-        <Container>
-            <div className="button-container">
-                <div className="emoji">
-                    <BsEmojiSmileFill />
-                </div>
-            </div>
-            <form className="input-container">
-                <input
-                    type="text"
-                    placeholder="type your message here"
-                />
-                <button type="submit">
-                    <IoMdSend />
-                </button>
-            </form>
-        </Container>
-    );
+
+  return (
+    <Container>
+      <div className="button-container">
+        <div className="emoji">
+
+          <BsEmojiSmileFill onClick={handleEmojPicker} />
+          {
+            emojPicker && <Picker onEmojiClick={handleEmojiMessage} />
+          }
+        </div>
+      </div>
+      <form className="input-container">
+        <input
+          type="text"
+          placeholder="type your message here"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <button type="submit">
+          <IoMdSend />
+        </button>
+      </form>
+    </Container>
+  );
 };
 
 const Container = styled.div`
@@ -52,9 +72,9 @@ padding: 0 2rem;
         color: #ffff00c8;
         cursor: pointer;
       }
-      .emoji-picker-react {
+      .EmojiPickerReact  {
         position: absolute;
-        top: -350px;
+        top: -500px;
         background-color: #080420;
         box-shadow: 0 5px 10px #9a86f3;
         border-color: #9a86f3;
@@ -65,12 +85,12 @@ padding: 0 2rem;
             background-color: #9a86f3;
           }
         }
-        .emoji-categories {
+        .epr-category-nav {
           button {
             filter: contrast(0);
           }
         }
-        .emoji-search {
+        .epr-search {
           background-color: transparent;
           border-color: #9a86f3;
         }
