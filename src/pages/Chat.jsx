@@ -51,7 +51,10 @@ const Chat = () => {
                     <Container>
                         <div className="container">
                             <ChatContact currentUser={currentUser} setCurrentChatUser={setCurrentChatUser} contacts={contacts} />
-                            <ChatSheet currentChatUser={currentChatUser} />
+                            {
+                                currentChatUser &&
+                                <ChatSheet currentChatUser={currentChatUser} currentUser={currentUser} />
+                            }
                         </div>
 
                     </Container>

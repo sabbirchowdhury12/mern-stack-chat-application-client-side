@@ -21,6 +21,14 @@ const ChatInput = ({ handleSendMessage }) => {
     setMessage(emojis);
   };
 
+  const handleSubmitMessage = (e) => {
+    e.preventDefault();
+    if (message.length > 0) {
+      handleSendMessage(message);
+      setMessage('');
+    }
+  };
+
 
 
   return (
@@ -34,7 +42,7 @@ const ChatInput = ({ handleSendMessage }) => {
           }
         </div>
       </div>
-      <form className="input-container">
+      <form className="input-container" onSubmit={(e) => handleSubmitMessage(e)}>
         <input
           type="text"
           placeholder="type your message here"
@@ -110,12 +118,13 @@ padding: 0 2rem;
     background-color: #ffffff34;
     input {
       width: 90%;
-      height: 60%;
+      height: 90%;
       background-color: transparent;
       color: white;
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
+      padding-bottom: 0.3rem
       &::selection {
         background-color: #9a86f3;
       }
