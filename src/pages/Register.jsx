@@ -2,28 +2,89 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.svg';
-import axios from 'axios';
+import { useForm } from "react-hook-form";
 import { registerRoute } from '../utilities/APIRoutes';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const Register = () => {
 
 
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+
+    const handleRegister = async (data) => {
+        const { userName, email, password, confirmPassword } = data;
+        //handle password and confirm password
+        if (password !== confirmPassword) {
+            setError('Password and Confirm Password Should be same');
+            return;
+        }
+        setError('');
+        //send user information to database
+        const { data: result } = await axios.post(registerRoute, {
+            userName,
+            email,
+            password
+        });
+
+        console.log(result);
+
+        if (result.status === false) {
+            setError(result.message);
+        }
+        if (result.status === true) {
+            setError('');
+            toast.success('Register Success');
+            localStorage.setItem('Chat-App-User', JSON.stringify(result.user));
+            navigate('/profile');
+        }
+    };
 
 
     return (
         <>
             <FromContainer>
-                <form onSubmit={(event) => handleSubmit(event)}>
+                <form onSubmit={handleSubmit(handleRegister)}>
                     <div className="brand">
                         <img src={logo} alt="" />
                         <h2>brand</h2>
                     </div>
-                    <input type="text" placeholder='Username' name='userName' onChange={(e) => handleChange(e)} />
-                    <input type="email" placeholder='Email' name='email' onChange={(e) => handleChange(e)} />
-                    <input type="password" placeholder='Password' name='password' onChange={(e) => handleChange(e)} />
-                    <input type="password" placeholder='Confirm Password' name='confirmPassword' onChange={(e) => handleChange(e)} />
-                    <p >{error}</p>
+                    <input
+                        {...register("userName",
+                            { required: true, }
+                        )}
+                        type="text" placeholder='Username' name='userName' />
+                    {errors.userName && <p>User Name  is required</p>}
+
+                    <input
+                        {...register("email",
+                            { required: true, }
+                        )}
+                        type="email" placeholder='Email' name='email' />
+                    {errors.email && <p>Email is required</p>}
+
+                    <input
+                        {...register("password",
+                            {
+                                required: "Password is required",
+                                minLength: { value: 6, message: "Password must be 6 characters long" },
+                                // pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
+                            },
+                        )}
+                        type="password" placeholder='Password' name='password' />
+                    {errors.password && <p>{errors.password.message}</p>}
+
+                    <input
+                        {...register("confirmPassword",
+                            { required: true, }
+                        )}
+                        type="password" placeholder='Confirm Password' name='confirmPassword' />
+                    {errors.confirmPassword && <p>Confirm Password is Required</p>}
+                    <p>{error}</p>
+
                     <button type='submit'> Create User</button>
                     <span>
                         Already have an account? Please <Link to='/login'>Login</Link>
