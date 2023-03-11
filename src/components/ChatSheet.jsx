@@ -144,6 +144,9 @@ const Container = styled.div`
       justify-content: flex-end;
       .content {
         background-color: #4f04ff21;
+        p{
+          color: #ffffff
+        }
       }
     }
     .recieved {

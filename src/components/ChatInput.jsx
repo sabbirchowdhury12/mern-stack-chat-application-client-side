@@ -118,13 +118,11 @@ padding: 0 2rem;
     background-color: #ffffff34;
     input {
       width: 90%;
-      height: 90%;
       background-color: transparent;
       color: white;
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
-      padding-bottom: 0.3rem
       &::selection {
         background-color: #9a86f3;
       }
