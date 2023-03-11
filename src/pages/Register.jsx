@@ -15,6 +15,8 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
 
+
+
     const handleRegister = async (data) => {
         const { userName, email, password, confirmPassword } = data;
         //handle password and confirm password
