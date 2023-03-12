@@ -27,9 +27,7 @@ const Register = () => {
         setError('');
         //send user information to database
         const { data: result } = await axios.post(registerRoute, {
-            userName,
-            email,
-            password
+            userName, email, password
         });
 
         console.log(result);
@@ -39,10 +37,11 @@ const Register = () => {
         }
         if (result.status === true) {
             setError('');
-            toast.success('Register Success');
+            toast.success('register success');
             localStorage.setItem('Chat-App-User', JSON.stringify(result.user));
             navigate('/profile');
         }
+
     };
 
 

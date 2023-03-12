@@ -25,12 +25,9 @@ const Login = () => {
     const handleLogin = async (data) => {
         const { userName, password } = data;
 
-        const user = {
-            userName, password
-        };
 
         const { data: result } = await axios.post(loginRoute, {
-            user
+            userName, password
         });
 
         if (result.status === false) {
@@ -38,7 +35,8 @@ const Login = () => {
         }
         if (result.status === true) {
             setError('');
-            localStorage.setItem('Chat-App-User', JSON.stringify(result.user));
+            toast.success('login seccuss');
+            localStorage.setItem('Chat-App-User', JSON.stringify(result.person));
             navigate('/profile');
         }
     };
