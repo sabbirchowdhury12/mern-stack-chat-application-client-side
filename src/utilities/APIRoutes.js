@@ -1,6 +1,8 @@
 export const host = "http://localhost:5000";
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
+export const sendEmailRoute = `${host}/api/auth/email`;
+export const resetPasswordRoute = `${host}/api/auth/resetPassword`;
 export const logoutRoute = `${host}/api/auth/logout`;
 export const allUsersRoute = `${host}/api/auth/allusers`;
 export const recieveMessageRoute = `${host}/api/messages/getmsg`;

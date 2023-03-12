@@ -37,7 +37,7 @@ const Profile = () => {
 
             if (data.isSet) {
                 toast.success('Profile done');
-                user.isprofileImageSet = true;
+                user.isProfileImageSet = true;
                 user.profileImage = data.profile;
                 localStorage.setItem('Chat-App-User', JSON.stringify(user));
                 navigate('/');

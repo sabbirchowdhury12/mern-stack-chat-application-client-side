@@ -49,10 +49,10 @@ const Register = () => {
         <>
             <FromContainer>
                 <form onSubmit={handleSubmit(handleRegister)}>
-                    <div className="brand">
+                    {/* <div className="brand">
                         <img src={logo} alt="" />
                         <h2>brand</h2>
-                    </div>
+                    </div> */}
                     <input
                         {...register("userName",
                             { required: true, }
@@ -104,7 +104,8 @@ const FromContainer = styled.div`
     justify-content: center;
     gap: 1rem;
     align-items: center;
-    background-color: #131324;
+    // background-color: #131324;
+     background-color: #FFF;
     .brand {
     display: flex;
     align-items: center;
@@ -122,7 +123,7 @@ const FromContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: black;
     border-radius: 2rem;
     padding: 3rem 5rem;
     }

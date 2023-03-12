@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.svg';
 import axios from 'axios';
@@ -46,10 +46,10 @@ const Login = () => {
         <>
             <FromContainer>
                 <form onSubmit={handleSubmit(handleLogin)}>
-                    <div className="brand">
+                    {/* <div className="brand">
                         <img src={logo} alt="" />
                         <h2>brand</h2>
-                    </div>
+                    </div> */}
                     <input
                         {
                         ...register('userName', {
@@ -66,6 +66,7 @@ const Login = () => {
                         }
                         type="password" placeholder='Password' name='password' />
                     {errors.password && <p>User name is required</p>}
+                    <p> <Link to='/password'>Forget Password</Link></p>
                     <p>{error}</p>
                     <button type='submit'> Login</button>
                     <span>
@@ -86,7 +87,7 @@ const FromContainer = styled.div`
     justify-content: center;
     gap: 1rem;
     align-items: center;
-    background-color: #131324;
+    // background-color: #131324;
     .brand {
     display: flex;
     align-items: center;
@@ -104,7 +105,7 @@ const FromContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: black;
     border-radius: 2rem;
     padding: 3rem 5rem;
     }

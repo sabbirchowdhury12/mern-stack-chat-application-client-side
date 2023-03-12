@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500&display=swap');
 
 * {
@@ -5,6 +10,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 
 body,
 button,
