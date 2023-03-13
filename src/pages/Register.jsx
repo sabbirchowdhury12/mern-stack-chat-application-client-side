@@ -104,8 +104,7 @@ const FromContainer = styled.div`
     justify-content: center;
     gap: 1rem;
     align-items: center;
-    // background-color: #131324;
-     background-color: #FFF;
+    background-color: #181823;
     .brand {
     display: flex;
     align-items: center;
@@ -123,25 +122,26 @@ const FromContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: black;
+    background-color: #181823;
+    box-shadow: 0.3rem 0.3rem 1px #C0EEF2;
     border-radius: 2rem;
     padding: 3rem 5rem;
     }
     input {
     background-color: transparent;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: 0.1rem solid #537FE7;
     border-radius: 0.4rem;
     color: white;
     width: 100%;
     font-size: 1rem;
     &:focus {
-        border: 0.1rem solid #997af0;
+        border: 0.1rem solid #C0EEF2;
         outline: none;
     }
     }
     button {
-    background-color: #4e0eff;
+    background-color: #537FE7;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -155,7 +155,7 @@ const FromContainer = styled.div`
     color: white;
     text-transform: uppercase;
     a {
-        color: #4e0eff;
+        color: #537FE7;
         text-decoration: none;
         font-weight: bold;
     }

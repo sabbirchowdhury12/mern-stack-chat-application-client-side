@@ -136,7 +136,7 @@ padding: 0 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #9a86f3;
+      background-color: #C0EEF2;
       border: none;
       @media screen and (min-width: 720px) and (max-width: 1080px) {
         padding: 0.3rem 1rem;
@@ -146,7 +146,7 @@ padding: 0 2rem;
       }
       svg {
         font-size: 2rem;
-        color: white;
+        color: black;
       }
     }
   }

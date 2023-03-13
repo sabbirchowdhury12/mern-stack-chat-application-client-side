@@ -36,7 +36,7 @@ const Password = () => {
             {showForm ? <form onSubmit={handleSubmit(handlePassword)}>
                 <div className="brand">
                     {/* // <img src={logo} alt="" /> */}
-                    <h2>brand</h2>
+                    <h2>CHAT APP</h2>
                 </div>
                 <input
                     {
@@ -68,6 +68,7 @@ const FromContainer = styled.div`
     gap: 1rem;
     align-items: center;
     // background-color: #131324;
+    background-color: #181823;
     .brand {
     display: flex;
     align-items: center;
@@ -77,7 +78,7 @@ const FromContainer = styled.div`
         height: 5rem;
     }
     h2 {
-        color: white;
+        color: #537FE7;
         text-transform: uppercase;
     }
     }
@@ -85,27 +86,30 @@ const FromContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: black;
+    background-color: #181823;
+    box-shadow: 0.3rem 0.3rem 1px #C0EEF2;
     border-radius: 2rem;
     padding: 3rem 5rem;
     }
     input {
     background-color: transparent;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: 0.1rem solid #537FE7;
     border-radius: 0.4rem;
     color: white;
     width: 100%;
     font-size: 1rem;
     &:focus {
-        border: 0.1rem solid #997af0;
+        // border: 0.1rem solid #997af0;
+        border: 0.1rem solid #C0EEF2;
         outline: none;
     }
     }
     button {
-    background-color: #4e0eff;
-    color: white;
-    padding: 1rem 2rem;
+    // background-color: #4e0eff;
+    background-color: #537FE7;
+    color: #fff;
+    padding: 0.8rem 2rem;
     border: none;
     font-weight: bold;
     cursor: pointer;
@@ -114,10 +118,10 @@ const FromContainer = styled.div`
     text-transform: uppercase;
     }
     span {
-    color: white;
+    color: #C0EEF2;
     text-transform: uppercase;
     a {
-        color: #4e0eff;
+        color: #537FE7;
         text-decoration: none;
         font-weight: bold;
     }

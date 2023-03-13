@@ -28,10 +28,9 @@ const Chat = () => {
         // declare the data fetching function
         const fetchData = async () => {
             if (currentUser) {
-                const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-                setContacts(data.data);
+                const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+                setContacts(data);
             };
-
         };
         // call the function
         fetchData()

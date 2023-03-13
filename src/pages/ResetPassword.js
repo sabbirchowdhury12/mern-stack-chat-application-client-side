@@ -38,7 +38,7 @@ const ResetPassword = ({ email }) => {
         <form onSubmit={handleSubmit(handlePassword)}>
             <div className="brand">
                 {/* // <img src={logo} alt="" /> */}
-                <h2>brand</h2>
+                <h2>CHAT APP</h2>
             </div>
             <input
                 {
@@ -66,8 +66,7 @@ const ResetPassword = ({ email }) => {
             {errors.confirmPassword && <p>Confirm Password is required</p>}
             <p>{error}</p>
 
-            <button type='submit'> Send OTP</button>
-
+            <button type='submit'> Change Password</button>
         </form>
 
 

@@ -4,6 +4,11 @@ import { useEffect } from 'react';
 import styled from "styled-components";
 import { getAllMsgRoute, sendMsgRoute } from '../utilities/APIRoutes';
 import ChatInput from './ChatInput';
+import { IoCall, IoVideocam } from "react-icons/io5";
+// import { IoMdSend, IoCall, IoVideocam } from 'react-icons/io';
+
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+
 
 
 
@@ -33,7 +38,6 @@ const ChatSheet = ({ currentChatUser, currentUser }) => {
       to: currentChatUser._id,
       message: msg,
     });
-
     console.log(data);
   };
 
@@ -51,8 +55,10 @@ const ChatSheet = ({ currentChatUser, currentUser }) => {
                   <h3>{currentChatUser.userName}</h3>
                 </div>
               </div>
-              <div className='chat-messages '>
-                <h2>Log Out</h2>
+              <div className='chat-icon '>
+                <IoCall />
+                <IoVideocam />
+                <HiOutlineDotsHorizontal />
               </div>
             </div>
             <div className="chat-messages">
@@ -73,7 +79,7 @@ const ChatSheet = ({ currentChatUser, currentUser }) => {
                 })
               }
             </div>
-            <ChatInput handleSendMessage={handleSendMessage}></ChatInput>
+            {/* <ChatInput handleSendMessage={handleSendMessage}></ChatInput> */}
           </Container>
       }
     </>
@@ -110,12 +116,20 @@ const Container = styled.div`
         }
       }
     }
+    .chat-icon{
+      display: flex;
+      gap: 1rem;
+      font-size: 1.6rem;
+      color: white;
+    }
   }
   .chat-messages {
     padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    color: white;
+    font-size: 1.6rem;
     overflow: auto;
     &::-webkit-scrollbar {
       width: 0.2rem;

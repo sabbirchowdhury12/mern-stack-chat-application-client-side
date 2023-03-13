@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
-import logo from '../assets/logo.svg';
+import { IoMdSend } from 'react-icons/io';
 
 
-const ChatContact = ({ contacts, setCurrentChatUser }) => {
 
-  const [currentUserName, setCurrentUserName] = useState(undefined);
-  const [currentUserProfile, setCurrentUserProfile] = useState('');
+const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
+
+  // const [currentUserName, setCurrentUserName] = useState(undefined);
+  // const [currentUserProfile, setCurrentUserProfile] = useState('');
   const [selectedUser, setSelectedUser] = useState(undefined);
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await JSON.parse(
-        localStorage.getItem('Chat-App-User')
-      );
-      setCurrentUserName(data.userName);
-      setCurrentUserProfile(data.profileImage);
+  console.log(currentUser);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await JSON.parse(
+  //       localStorage.getItem('Chat-App-User')
+  //     );
+  //     setCurrentUserName(data.userName);
+  //     setCurrentUserProfile(data.profileImage);
 
-    };
-    // call the function
-    fetchData()
-      // make sure to catch any error
-      .catch(console.error);
+  //   };
+  //   // call the function
+  //   fetchData()
+  //     // make sure to catch any error
+  //     .catch(console.error);
 
-  }, []);
+  // }, []);
 
 
   const changeUserId = (ind, contact) => {
@@ -39,11 +41,31 @@ const ChatContact = ({ contacts, setCurrentChatUser }) => {
   return (
     <>
       {
-        currentUserName &&
+        currentUser &&
         <Container>
-          <div className="brand">
-            <img src={logo} alt="" />
-            <h3>Chat</h3>
+          <div className='profile'>
+            <p>CHAT APP</p>
+            <div className="brand">
+              <div className="current-user">
+                <div className="avatar">
+                  <img
+                    src={`data:image/svg+xml;base64,${currentUser.profileImage}`}
+                    alt="avatar"
+                  />
+                </div>
+
+              </div>
+              <div className="username flex justify-between">
+                <h3>{currentUser.userName}</h3>
+              </div>
+            </div>
+            <form className="input-container">
+              <input
+                type="text"
+                placeholder="search"
+              />
+
+            </form>
           </div>
           <div className="contacts">
             {
@@ -64,17 +86,6 @@ const ChatContact = ({ contacts, setCurrentChatUser }) => {
               })
             }
           </div>
-          <div className="current-user">
-            <div className="avatar">
-              <img
-                src={`data:image/svg+xml;base64,${currentUserProfile}`}
-                alt="avatar"
-              />
-            </div>
-            <div className="username">
-              <h2>{currentUserName}</h2>
-            </div>
-          </div>
         </Container>
       }
     </>
@@ -85,21 +96,60 @@ export default ChatContact;
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 10% 75% 15%;
+  grid-template-rows: 25% 75% ;
   overflow: hidden;
-  background-color: #080420;
+  gap: 2rem;
+  background-color: #181823;
+  .profile{
+    padding: 0.4rem;
+    //  background-color: ;;
+    padding: 0px;
+  }
+  p{
+    text-align: center;
+    padding: 1rem;
+    color: white
+  }
+  .input-container {
+    margin: 1rem 0;
+    width: 100%;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background-color: #ffffff34;
+    input {
+      width: 90%;
+      background-color: transparent;
+      color: white;
+      padding: 0.7rem;
+      border: none;
+      padding-left: 1rem;
+      font-size: 1.2rem;
+      &::selection {
+        background-color: #9a86f3;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+   
+      
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
     img {
-      height: 2rem;
+      height: 1rem;
     }
     h3 {
       color: white;
       text-transform: uppercase;
     }
+
+    
   }
   .contacts {
     display: flex;
@@ -138,11 +188,10 @@ const Container = styled.div`
       }
     }
     .selected {
-      background-color: #9a86f3;
+      background-color: #537FE7;
     }
   }
   .current-user {
-    background-color: #0d0d30;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,6 +203,8 @@ const Container = styled.div`
       }
     }
     .username {
+      dispaly: flex;
+    
       h2 {
         color: white;
       }

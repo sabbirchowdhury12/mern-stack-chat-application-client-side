@@ -16,6 +16,7 @@ const Profile = () => {
     const api = `https://api.multiavatar.com`;
     const navigate = useNavigate();
 
+    console.log(selectedProfile);
     // check user available or not
     useEffect(() => {
         if (!localStorage.getItem('Chat-App-User')) {
@@ -25,6 +26,7 @@ const Profile = () => {
 
     //set profile and user in local storage
     const setProfile = async () => {
+        console.log(selectedProfile);
         if (selectedProfile === null) {
             toast.error('Please select a picture');
         } else {
@@ -64,7 +66,6 @@ const Profile = () => {
                 // console.log(buffer);
                 imageData.push(buffer.toString("base64"));
             }
-
             setProfiles(imageData);
             setIsLoading(false);
         };
@@ -82,7 +83,7 @@ const Profile = () => {
 
                     <Container>
                         <div className="title-container">
-                            select your profile
+                            <h2>select your profile</h2>
                         </div>
                         <div className="avatars">
                             {
@@ -124,8 +125,9 @@ const Container = styled.div`
     max-inline-size: 100%;
   }
   .title-container {
-    h1 {
-      color: white;
+    h2 {
+      color: #E9F8F9;
+      text-transform: uppercase;
     }
   }
   .avatars {
@@ -145,11 +147,11 @@ const Container = styled.div`
       }
     }
     .selected {
-      border: 0.4rem solid #4e0eff;
+      border: 0.4rem solid #537FE7;
     }
   }
   .submit-btn {
-    background-color: #4e0eff;
+    background-color: #537FE7;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -159,7 +161,7 @@ const Container = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #4e0eff;
+      background-color: #537FE7;
     }
   }
 `;
