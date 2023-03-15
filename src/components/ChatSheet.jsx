@@ -1,30 +1,37 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import styled from "styled-components";
 import { getAllMsgRoute, sendMsgRoute } from '../utilities/APIRoutes';
 import ChatInput from './ChatInput';
 import { IoCall, IoVideocam } from "react-icons/io5";
 // import { IoMdSend, IoCall, IoVideocam } from 'react-icons/io';
-
+import { v4 as uuidv4 } from "uuid";
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 
 
 
 
-const ChatSheet = ({ currentChatUser, currentUser }) => {
+const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
 
   const [allMessage, setAllMessage] = useState([]);
+  const [arrivalMessage, setArraivalMessage] = useState(null);
+  const scrollRef = useRef();
 
   useEffect(() => {
+
     const fetchData = async () => {
-      const data = await axios.post(getAllMsgRoute, {
-        from: currentUser._id,
+
+      const data = await JSON.parse(
+        localStorage.getItem('Chat-App-User')
+      );
+
+      const response = await axios.post(getAllMsgRoute, {
+        from: data._id,
         to: currentChatUser._id,
       });
+      setAllMessage(response.data);
 
-      setAllMessage(data.data);
-      console.log(data.data);
     };
 
     fetchData()
@@ -32,14 +39,57 @@ const ChatSheet = ({ currentChatUser, currentUser }) => {
   }, [currentChatUser]);
 
 
+  useEffect(() => {
+    const getCurrentChat = async () => {
+      if (currentChatUser) {
+        await JSON.parse(
+          localStorage.getItem('Chat-App-User')
+        )._id;
+      }
+    };
+    getCurrentChat();
+  }, [currentChatUser]);
+
   const handleSendMessage = async (msg) => {
-    const { data } = await axios.post(sendMsgRoute, {
+
+    const data = await JSON.parse(
+      localStorage.getItem('Chat-App-User')
+    );
+
+    socket.current.emit("send-msg", {
+      to: currentChatUser._id,
+      from: data._id,
+      message: msg,
+    });
+
+    await axios.post(sendMsgRoute, {
       from: currentUser._id,
       to: currentChatUser._id,
       message: msg,
     });
-    console.log(data);
+
+    const messages = [...allMessage];
+    messages.push({ mySelf: true, message: msg });
+    setAllMessage(messages);
   };
+
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-recived", (msg) => {
+        setArraivalMessage({ mySelf: false, message: msg });
+      });
+    }
+  }, []);
+
+
+  useEffect(() => {
+    arrivalMessage && setAllMessage((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  // useEffect(() => {
+  //   scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [allMessage]);
 
   return (
     <>
@@ -63,9 +113,9 @@ const ChatSheet = ({ currentChatUser, currentUser }) => {
             </div>
             <div className="chat-messages">
               {
-                allMessage.map((message, ind) => {
+                allMessage.map((message) => {
                   return (
-                    <div key={ind}>
+                    <div ref={scrollRef} key={uuidv4()}>
                       <div
                         className={`message ${message.mySelf ? "sended" : "recieved"
                           }`}
@@ -79,7 +129,7 @@ const ChatSheet = ({ currentChatUser, currentUser }) => {
                 })
               }
             </div>
-            {/* <ChatInput handleSendMessage={handleSendMessage}></ChatInput> */}
+            <ChatInput handleSendMessage={handleSendMessage}></ChatInput>
           </Container>
       }
     </>

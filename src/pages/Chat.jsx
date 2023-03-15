@@ -1,14 +1,16 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import ChatContact from '../components/ChatContact';
 import ChatSheet from '../components/ChatSheet';
-import { allUsersRoute } from '../utilities/APIRoutes';
+import { allUsersRoute, host } from '../utilities/APIRoutes';
+import { io } from 'socket.io-client';
 
 
 const Chat = () => {
 
+    const socket = useRef();
     const [currentUser, SetCurrentUser] = useState(JSON.parse(localStorage.getItem('Chat-App-User')));
     const [contacts, setContacts] = useState([]);
     const [currentChatUser, setCurrentChatUser] = useState(undefined);
@@ -25,11 +27,23 @@ const Chat = () => {
 
 
     useEffect(() => {
+        if (currentUser) {
+            socket.current = io(host);
+            socket.current.emit("add-user", currentUser._id);
+        }
+    }, [currentUser]);
+
+
+    useEffect(() => {
         // declare the data fetching function
         const fetchData = async () => {
             if (currentUser) {
-                const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-                setContacts(data);
+                if (currentUser.isProfileImageSet) {
+                    const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+                    setContacts(data);
+                } else {
+                    navigate('/profile');
+                }
             };
         };
         // call the function
@@ -52,10 +66,9 @@ const Chat = () => {
                             <ChatContact currentUser={currentUser} setCurrentChatUser={setCurrentChatUser} contacts={contacts} />
                             {
                                 currentChatUser &&
-                                <ChatSheet currentChatUser={currentChatUser} currentUser={currentUser} />
+                                <ChatSheet currentChatUser={currentChatUser} currentUser={currentUser} socket={socket} />
                             }
                         </div>
-
                     </Container>
                 }
             </>
