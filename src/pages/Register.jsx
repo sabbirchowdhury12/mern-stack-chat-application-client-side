@@ -39,7 +39,7 @@ const Register = () => {
             setError('');
             toast.success('register success');
             localStorage.setItem('Chat-App-User', JSON.stringify(result.user));
-            navigate('/profile');
+            navigate("/");
         }
 
     };

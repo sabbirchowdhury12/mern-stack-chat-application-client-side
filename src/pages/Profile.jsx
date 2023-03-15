@@ -31,7 +31,7 @@ const Profile = () => {
             toast.error('Please select a picture');
         } else {
             const user = await JSON.parse(localStorage.getItem('Chat-App-User'));
-
+            console.log(user._id);
             const { data } = await axios.post(`${setProfileRoute}/${user._id}`, {
                 profileImage: profiles[selectedProfile]
             });

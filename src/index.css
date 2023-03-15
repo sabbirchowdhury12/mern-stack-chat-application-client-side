@@ -43,3 +43,28 @@ p {
     justify-content: center;
 
 } */
+
+abc {
+    /* height: 200px;
+    height: 200px;
+    position: relative;
+    top: 20px;
+    text-align: end;
+    z-index: 100;
+    background: rgba(18, 112, 18, 0.867);
+    transition: all 5s ease-in */
+
+    /* position: absolute;
+    width: 200px;
+    right: 0;
+    background: rgba(18, 112, 18, 0.867);
+    top: 80px;
+    background: white;
+    padding: 1rem;
+    text-align: center; */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}

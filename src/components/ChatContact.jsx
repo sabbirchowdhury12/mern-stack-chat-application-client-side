@@ -11,7 +11,7 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
   const [selectedUser, setSelectedUser] = useState(undefined);
 
 
-  console.log(currentUser);
+
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const data = await JSON.parse(
@@ -55,7 +55,7 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
                 </div>
 
               </div>
-              <div className="username flex justify-between">
+              <div className="username">
                 <h3>{currentUser.userName}</h3>
               </div>
             </div>

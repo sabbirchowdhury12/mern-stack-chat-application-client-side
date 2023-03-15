@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from 'react-icons/io';
 import Picker from "emoji-picker-react";
+import { TfiGallery } from "react-icons/tfi";
+import { TbThumbUpFilled } from "react-icons/tb";
 
 const ChatInput = ({ handleSendMessage }) => {
 
@@ -42,6 +44,9 @@ const ChatInput = ({ handleSendMessage }) => {
           }
         </div>
       </div>
+      <div className='gallery'>
+        <TfiGallery size={20} />
+      </div>
       <form className="input-container" onSubmit={(e) => handleSubmitMessage(e)}>
         <input
           type="text"
@@ -53,14 +58,17 @@ const ChatInput = ({ handleSendMessage }) => {
           <IoMdSend />
         </button>
       </form>
-    </Container>
+      <div className='thumb'>
+        <TbThumbUpFilled size={30} />
+      </div>
+    </Container >
   );
 };
 
 const Container = styled.div`
 display: grid;
 align-items: center;
-grid-template-columns: 5% 95%;
+grid-template-columns: 5% 5% 85% 5%;
 background-color: #080420;
 padding: 0 2rem;
 @media screen and (min-width: 720px) and (max-width: 1080px) {
@@ -71,13 +79,14 @@ padding: 0 2rem;
   .button-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     color: white;
     gap: 1rem;
     .emoji {
       position: relative;
       svg {
-        font-size: 1.5rem;
-        color: #ffff00c8;
+        font-size: 1.4rem;
+        color: #C0EEF2;
         cursor: pointer;
       }
       .EmojiPickerReact  {
@@ -109,6 +118,13 @@ padding: 0 2rem;
     }
   }
 
+  .gallery{
+    color: #C0EEF2;
+  }
+.thumb{
+  color: #FFC83D;
+  margin-left: 10px;
+}
   .input-container {
     width: 100%;
     border-radius: 2rem;

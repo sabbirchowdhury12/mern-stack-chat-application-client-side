@@ -8,6 +8,7 @@ import { IoCall, IoVideocam } from "react-icons/io5";
 // import { IoMdSend, IoCall, IoVideocam } from 'react-icons/io';
 import { v4 as uuidv4 } from "uuid";
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import ChatUserInfo from './ChatUserInfo';
 
 
 
@@ -17,6 +18,8 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
   const [allMessage, setAllMessage] = useState([]);
   const [arrivalMessage, setArraivalMessage] = useState(null);
   const scrollRef = useRef();
+  const [hidden, setHidden] = useState(false);
+  console.log(hidden);
 
   useEffect(() => {
 
@@ -105,11 +108,15 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
                   <h3>{currentChatUser.userName}</h3>
                 </div>
               </div>
-              <div className='chat-icon '>
+
+              <div className='chat-icon'>
                 <IoCall />
                 <IoVideocam />
-                <HiOutlineDotsHorizontal />
+                <label onClick={() => setHidden(!hidden)}>
+                  <HiOutlineDotsHorizontal />
+                </label>
               </div>
+
             </div>
             <div className="chat-messages">
               {
@@ -129,6 +136,9 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
                 })
               }
             </div>
+            {hidden &&
+              <ChatUserInfo currentChatUser={currentChatUser} />
+            }
             <ChatInput handleSendMessage={handleSendMessage}></ChatInput>
           </Container>
       }
@@ -143,6 +153,7 @@ const Container = styled.div`
   grid-template-rows: 10% 80% 10%;
   gap: 0.1rem;
   overflow: hidden;
+  position: relative;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
   }
@@ -170,7 +181,15 @@ const Container = styled.div`
       display: flex;
       gap: 1rem;
       font-size: 1.6rem;
-      color: white;
+      color: white; 
+    }
+
+    .box{
+      margin: 0;
+      width: 200px;
+      z-index: 100;
+      margin-top: 10px;
+      background: rgba(18, 112, 18, 0.867);
     }
   }
   .chat-messages {
@@ -216,7 +235,7 @@ const Container = styled.div`
     .recieved {
       justify-content: flex-start;
       .content {
-        background-color: #9900ff20;
+        background-color: #4f04ff21;
       }
     }
   }
