@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.svg';
 import axios from 'axios';
-import { loginRoute } from '../utilities/APIRoutes';
+import { jwt, loginRoute } from '../utilities/APIRoutes';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -23,9 +23,9 @@ const Login = () => {
 
 
     const handleLogin = async (data) => {
+
+
         const { userName, password } = data;
-
-
         const { data: result } = await axios.post(loginRoute, {
             userName, password
         });
@@ -37,8 +37,27 @@ const Login = () => {
             setError('');
             toast.success('login seccuss');
             localStorage.setItem('Chat-App-User', JSON.stringify(result.person));
+            handleJWT(result.person.userName, result.person.email);
             navigate('/profile');
         }
+    };
+
+
+    const handleJWT = (name, email) => {
+
+        axios.post(jwt, {
+            name, email
+        },
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((result) => {
+                localStorage.setItem('Chat-token', result.data.token);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
 
@@ -46,10 +65,10 @@ const Login = () => {
         <>
             <FromContainer>
                 <form onSubmit={handleSubmit(handleLogin)}>
-                    {/* <div className="brand">
-                        <img src={logo} alt="" />
-                        <h2>brand</h2>
-                    </div> */}
+                    <div className="brand">
+                        {/* <img src={logo} alt="" /> */}
+                        <h2>chat app</h2>
+                    </div>
                     <input
                         {
                         ...register('userName', {
@@ -66,8 +85,9 @@ const Login = () => {
                         }
                         type="password" placeholder='Password' name='password' />
                     {errors.password && <p>User name is required</p>}
-                    <p> <Link to='/password' className='forget-password'>Forget Password</Link></p>
                     <p>{error}</p>
+                    <p className='forget-password'> <Link to='/password' className='forget-password'>Forget Password</Link></p>
+
                     <button type='submit'> Login</button>
                     <span>
                         Don't have any account? Please <Link to='/register'>Register.</Link>
@@ -98,7 +118,7 @@ const FromContainer = styled.div`
         height: 5rem;
     }
     h2 {
-        color: white;
+        color:  #537FE7;
         text-transform: uppercase;
     }
     }
@@ -125,12 +145,12 @@ const FromContainer = styled.div`
         outline: none;
     }
     }
-    p{
+ 
+    .forget-password{
         text-align: end;
-        .forget-password{
-            color: #C0EEF2;
-        }
+        color: #C0EEF2;
     }
+
     button {
     // background-color: #4e0eff;
     background-color: #537FE7;

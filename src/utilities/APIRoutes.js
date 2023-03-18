@@ -1,4 +1,5 @@
 export const host = "http://localhost:5000";
+export const jwt = "http://localhost:5000/jwt";
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
 export const sendEmailRoute = `${host}/api/auth/email`;

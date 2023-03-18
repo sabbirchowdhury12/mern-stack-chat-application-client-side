@@ -7,7 +7,17 @@ function App() {
   return (
     <div className="App">
       <RouterProvider router={router} />
-      <Toaster />
+      <Toaster
+        reverseOrder={false}
+        position='top-center'
+        toastOptions={{
+          style: {
+            borderRadius: '8px',
+            background: 'yellow',
+            color: 'red',
+          },
+        }}
+      />
     </div>
   );
 }

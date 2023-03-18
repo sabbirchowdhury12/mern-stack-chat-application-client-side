@@ -28,7 +28,7 @@ const Chat = () => {
 
     useEffect(() => {
         if (currentUser) {
-            socket.current = io(host);
+            socket.current = io('http://localhost:5000');
             socket.current.emit("add-user", currentUser._id);
         }
     }, [currentUser]);
@@ -39,7 +39,11 @@ const Chat = () => {
         const fetchData = async () => {
             if (currentUser) {
                 if (currentUser.isProfileImageSet) {
-                    const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+                    const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`, {
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem('Chat-token')}`
+                        }
+                    });
                     setContacts(data);
                 } else {
                     navigate('/profile');

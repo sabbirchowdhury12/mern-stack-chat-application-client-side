@@ -22,7 +22,16 @@ const Profile = () => {
         if (!localStorage.getItem('Chat-App-User')) {
             navigate('/login');
         }
-    });
+    }, []);
+
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem('Chat-App-User'));
+        console.log(data);
+        if (data.isProfileImageSet) {
+            navigate('/');
+        }
+
+    }, []);
 
     //set profile and user in local storage
     const setProfile = async () => {
@@ -77,7 +86,7 @@ const Profile = () => {
             {
                 isLoading ? (
                     <Container>
-                        <h2>loading....</h2>
+                        <h1>loading....</h1>
                     </Container>
                 ) : (
 
@@ -163,6 +172,9 @@ const Container = styled.div`
     &:hover {
       background-color: #537FE7;
     }
+  }
+  h1{
+    color: white;
   }
 `;
 

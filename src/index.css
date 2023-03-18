@@ -28,8 +28,13 @@ p {
     color: red;
 }
 
+.toast {
+    background: yellow;
+    color: red;
+}
 
-/* p {
+
+pasd {
     justify-content: space-between;
     text-align: center;
     padding: 1rem;
@@ -38,11 +43,11 @@ p {
     color: #537FE7;
     color: #C0EEF2;
     color: #ffffffc1;
- 
+    color: rgb(255, 255, 0);
     align-items: center;
     justify-content: center;
 
-} */
+}
 
 abc {
     /* height: 200px;
@@ -67,4 +72,6 @@ abc {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    font-weight: bold;
+    font-size: 20px;
 }

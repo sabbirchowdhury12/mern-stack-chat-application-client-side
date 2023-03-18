@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { IoMdSend } from 'react-icons/io';
+import { IoSettingsSharp } from 'react-icons/io5';
+import CurrentUserInfo from './CurrentUserInfo';
 
 
 
@@ -9,6 +11,8 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
   // const [currentUserName, setCurrentUserName] = useState(undefined);
   // const [currentUserProfile, setCurrentUserProfile] = useState('');
   const [selectedUser, setSelectedUser] = useState(undefined);
+  const [hidden, setHidden] = useState(false);
+  console.log(hidden);
 
 
 
@@ -44,8 +48,12 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
         currentUser &&
         <Container>
           <div className='profile'>
-            <p>CHAT APP</p>
+            <div className="header">
+              <h2>CHAT APP</h2>
+              <label onClick={() => setHidden(!hidden)}><IoSettingsSharp className='icon' color='white' size={20} /></label>
+            </div>
             <div className="brand">
+
               <div className="current-user">
                 <div className="avatar">
                   <img
@@ -81,6 +89,11 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
                     <div className='username'>
                       <h3>{contact.userName}</h3>
                     </div>
+                    {
+                      hidden &&
+                      <CurrentUserInfo currentUser={currentUser} />
+
+                    }
                   </div>
                 );
               })
@@ -100,10 +113,22 @@ const Container = styled.div`
   overflow: hidden;
   gap: 2rem;
   background-color: #181823;
+  position: relative;
   .profile{
     padding: 0.4rem;
     //  background-color: ;;
     padding: 0px;
+  }
+  .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 20px;
+
+    h2{
+      color: white
+    }
   }
   p{
     text-align: center;
