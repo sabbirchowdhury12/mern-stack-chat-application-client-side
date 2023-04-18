@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import ChatContact from '../components/ChatContact';
 import ChatSheet from '../components/ChatSheet';
-import { allUsersRoute, host } from '../utilities/APIRoutes';
+import { allUsersRoute } from '../utilities/APIRoutes';
 import { io } from 'socket.io-client';
 
 
@@ -15,6 +15,7 @@ const Chat = () => {
     const [contacts, setContacts] = useState([]);
     const [currentChatUser, setCurrentChatUser] = useState(undefined);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
 
     // console.log(currentUser);
@@ -41,10 +42,12 @@ const Chat = () => {
                 if (currentUser.isProfileImageSet) {
                     const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`, {
                         headers: {
-                            authorization: `Bearer ${localStorage.getItem('Chat-token')}`
+                            authorization: `Bearer ${localStorage.getItem('Chat-token')}`,
+                            email: currentUser.email,
                         }
                     });
                     setContacts(data);
+                    setLoading(false);
                 } else {
                     navigate('/profile');
                 }
@@ -54,29 +57,28 @@ const Chat = () => {
         fetchData()
             // make sure to catch any error
             .catch(console.error);
-    }, [currentUser]);
+    }, [currentUser, loading]);
 
 
     return (
-        <div>
-            <Link to='/register'>Register</Link>
-            <Link to='/login'>Login</Link>
-            <Link to='/profile'>profile</Link>
+        <>
+            {loading ?
 
-            <>
-                {contacts.length &&
-                    <Container>
-                        <div className="container">
-                            <ChatContact currentUser={currentUser} setCurrentChatUser={setCurrentChatUser} contacts={contacts} />
-                            {
-                                currentChatUser &&
-                                <ChatSheet currentChatUser={currentChatUser} currentUser={currentUser} socket={socket} />
-                            }
-                        </div>
-                    </Container>
-                }
-            </>
-        </div>
+                <Container>
+                    <h1 className='loading'>loading....</h1>
+                </Container> :
+
+                <Container>
+                    <div className="container">
+                        <ChatContact currentUser={currentUser} setCurrentChatUser={setCurrentChatUser} contacts={contacts} />
+                        {
+                            currentChatUser &&
+                            <ChatSheet currentChatUser={currentChatUser} currentUser={currentUser} socket={socket} />
+                        }
+                    </div>
+                </Container>
+            }
+        </>
     );
 };
 
@@ -101,4 +103,8 @@ const Container = styled.div`
       grid-template-columns: 35% 65%;
     }
   }
+
+  .loading{
+    color: white
+}
 `;

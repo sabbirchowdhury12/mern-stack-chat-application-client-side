@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../assets/logo.svg';
 import axios from 'axios';
 import { jwt, loginRoute } from '../utilities/APIRoutes';
 import toast from 'react-hot-toast';

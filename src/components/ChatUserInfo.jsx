@@ -30,7 +30,7 @@ const data = [
 
 const ChatUserInfo = ({ currentChatUser }) => {
 
-    const { profileImage, userName, _id } = currentChatUser;
+    const { profileImage, userName, } = currentChatUser;
 
     return (
         <Container>

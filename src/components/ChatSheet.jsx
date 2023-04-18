@@ -9,7 +9,6 @@ import { IoCall, IoVideocam } from "react-icons/io5";
 import { v4 as uuidv4 } from "uuid";
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import ChatUserInfo from './ChatUserInfo';
-import Login from '../pages/Login';
 
 
 
@@ -137,9 +136,9 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
                 })
               }
             </div>
-            {/* {hidden &&
+            {hidden &&
               <ChatUserInfo currentChatUser={currentChatUser} />
-            } */}
+            }
             <ChatInput handleSendMessage={handleSendMessage}></ChatInput>
           </Container>
       }

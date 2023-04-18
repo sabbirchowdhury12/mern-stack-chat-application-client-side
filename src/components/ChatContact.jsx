@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
-import { IoMdSend } from 'react-icons/io';
 import { IoSettingsSharp } from 'react-icons/io5';
 import CurrentUserInfo from './CurrentUserInfo';
 
@@ -12,7 +11,7 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
   // const [currentUserProfile, setCurrentUserProfile] = useState('');
   const [selectedUser, setSelectedUser] = useState(undefined);
   const [hidden, setHidden] = useState(false);
-  console.log(hidden);
+  // console.log(hidden);
 
 
 

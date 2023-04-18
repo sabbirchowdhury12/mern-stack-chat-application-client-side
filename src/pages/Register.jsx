@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../assets/logo.svg';
 import { useForm } from "react-hook-form";
 import { registerRoute } from '../utilities/APIRoutes';
 import toast from 'react-hot-toast';

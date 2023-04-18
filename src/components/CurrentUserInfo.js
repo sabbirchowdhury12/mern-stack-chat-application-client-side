@@ -5,7 +5,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { ImBlocked } from "react-icons/im";
 import { CgLogOff } from "react-icons/cg";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const data = [
@@ -53,8 +53,8 @@ const CurrentUserInfo = () => {
 
             <div>
                 {
-                    data.map(d => {
-                        return <label className='box'>
+                    data.map((d, ind) => {
+                        return <label key={ind} className='box'>
                             <span> {d.icon}</span>
                             <p>{d.text}</p>
                             {d.button}

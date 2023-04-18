@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { resetEmailRoute, resetPasswordRoute } from '../utilities/APIRoutes';
+import { resetPasswordRoute } from '../utilities/APIRoutes';
 
 const ResetPassword = ({ email }) => {
 
