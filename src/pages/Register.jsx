@@ -8,7 +8,6 @@ import axios from 'axios';
 
 const Register = () => {
 
-
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -18,6 +17,7 @@ const Register = () => {
 
     const handleRegister = async (data) => {
         const { userName, email, password, confirmPassword } = data;
+        // console.log(userName, email, password, confirmPassword);
         //handle password and confirm password
         if (password !== confirmPassword) {
             setError('Password and Confirm Password Should be same');
@@ -29,7 +29,7 @@ const Register = () => {
             userName, email, password
         });
 
-        console.log(result);
+        // console.log(result);
 
         if (result.status === false) {
             setError(result.message);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import ChatContact from '../components/ChatContact';
 import ChatSheet from '../components/ChatSheet';
@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 const Chat = () => {
 
     const socket = useRef();
+    // eslint-disable-next-line
     const [currentUser, SetCurrentUser] = useState(JSON.parse(localStorage.getItem('Chat-App-User')));
     const [contacts, setContacts] = useState([]);
     const [currentChatUser, setCurrentChatUser] = useState(undefined);
@@ -38,20 +39,20 @@ const Chat = () => {
     useEffect(() => {
         // declare the data fetching function
         const fetchData = async () => {
-            if (currentUser) {
-                if (currentUser.isProfileImageSet) {
-                    const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`, {
-                        headers: {
-                            authorization: `Bearer ${localStorage.getItem('Chat-token')}`,
-                            email: currentUser.email,
-                        }
-                    });
-                    setContacts(data);
-                    setLoading(false);
-                } else {
-                    navigate('/profile');
-                }
-            };
+
+            if (currentUser && currentUser.isProfileImageSet) {
+                const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`, {
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('Chat-token')}`,
+                        email: currentUser.email,
+                    }
+                });
+                console.log(data);
+                setContacts(data);
+                setLoading(false);
+            } else {
+                navigate('/profile');
+            }
         };
         // call the function
         fetchData()

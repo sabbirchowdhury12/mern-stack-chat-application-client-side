@@ -13,21 +13,21 @@ const Profile = () => {
     const [profiles, setProfiles] = useState([]);
     const [selectedProfile, setSeletedProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const api = `https://api.multiavatar.com`;
+    // const api = `https://api.multiavatar.com`;
     const navigate = useNavigate();
 
-    console.log(selectedProfile);
+    // console.log(selectedProfile);
     // check user available or not
     useEffect(() => {
         if (!localStorage.getItem('Chat-App-User')) {
-            navigate('/login');
+            return navigate('/login');
         }
     }, []);
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem('Chat-App-User'));
-        console.log(data);
-        if (data.isProfileImageSet) {
+        // console.log(data);
+        if (data && data.isProfileImageSet) {
             navigate('/');
         }
 
@@ -64,16 +64,21 @@ const Profile = () => {
     useEffect(() => {
         return async () => {
             const imageData = [];
-            for (let i = 0; i < 2; i++) {
-                const { data } = await axios.get(
-                    `${api}/${Math.round(Math.random() * 1000)}`,
-                );
+            for (let i = 0; i < 4; i++) {
+
+                const data = `https://api.multiavatar.com/${Math.round(Math.random() * 10000)}.png?apikey=58YKgDR1IV9hPE`;
+
+                imageData.push(data);
+
+                // const { data } = await axios.get(
+                //     `${api}/${Math.round(Math.random() * 1000)}`,
+                // );
 
                 //make data image from svg
                 // console.log(image);
-                const buffer = new Buffer.from(data);
-                // console.log(buffer);
-                imageData.push(buffer.toString("base64"));
+                // const buffer = new Buffer.from(data);
+                // // console.log(buffer);
+                // imageData.push(buffer.toString("base64"));
             }
             setProfiles(imageData);
             setIsLoading(false);
@@ -102,7 +107,7 @@ const Profile = () => {
                                             className={`avatar ${selectedProfile === ind ? 'selected' : undefined}`}
                                         >
                                             <img
-                                                src={`data:image/svg+xml;base64,${profle}`}
+                                                src={profle}
                                                 alt="avatar"
                                                 onClick={() => setSeletedProfile(ind)}
                                             />

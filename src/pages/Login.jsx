@@ -23,7 +23,6 @@ const Login = () => {
 
     const handleLogin = async (data) => {
 
-
         const { userName, password } = data;
         const { data: result } = await axios.post(loginRoute, {
             userName, password
