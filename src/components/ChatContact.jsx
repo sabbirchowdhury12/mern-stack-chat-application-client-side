@@ -56,7 +56,7 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
               <div className="current-user">
                 <div className="avatar">
                   <img
-                    src={`data:image/svg+xml;base64,${currentUser.profileImage}`}
+                    src={currentUser.profileImage}
                     alt="avatar"
                   />
                 </div>

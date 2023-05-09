@@ -37,7 +37,7 @@ const ChatUserInfo = ({ currentChatUser }) => {
             <div>
                 <div className="avatar">
                     <img
-                        src={`data:image/svg+xml;base64,${profileImage}`}
+                        src={profileImage}
                         alt="avatar"
                     />
                 </div>

@@ -2,7 +2,6 @@ import axios from 'axios';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Buffer } from 'buffer';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 import { setProfileRoute } from '../utilities/APIRoutes';
@@ -13,10 +12,9 @@ const Profile = () => {
     const [profiles, setProfiles] = useState([]);
     const [selectedProfile, setSeletedProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    // const api = `https://api.multiavatar.com`;
     const navigate = useNavigate();
 
-    // console.log(selectedProfile);
+    console.log(selectedProfile);
     // check user available or not
     useEffect(() => {
         if (!localStorage.getItem('Chat-App-User')) {
@@ -24,6 +22,7 @@ const Profile = () => {
         }
     }, []);
 
+    //check profile image
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem('Chat-App-User'));
         // console.log(data);
@@ -45,7 +44,7 @@ const Profile = () => {
                 profileImage: profiles[selectedProfile]
             });
 
-
+            console.log(data);
             if (data.isSet) {
                 toast.success('Profile done');
                 user.isProfileImageSet = true;
