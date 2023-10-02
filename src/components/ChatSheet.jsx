@@ -19,7 +19,7 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
   const [arrivalMessage, setArraivalMessage] = useState(null);
   const scrollRef = useRef();
   const [hidden, setHidden] = useState(false);
-  console.log(hidden);
+
 
   useEffect(() => {
 
@@ -102,7 +102,7 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
             <div className="chat-header">
               <div className='user-details'>
                 <div className='avatar'>
-                  <img src={`data:image/svg+xml;base64,${currentChatUser.profileImage}`} alt="" />
+                  <img src={currentChatUser.profileImage} alt="" />
                 </div>
                 <div className="username">
                   <h3>{currentChatUser.userName}</h3>

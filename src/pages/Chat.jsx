@@ -1,86 +1,88 @@
-import axios from 'axios';
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ChatContact from '../components/ChatContact';
-import ChatSheet from '../components/ChatSheet';
-import { allUsersRoute } from '../utilities/APIRoutes';
-import { io } from 'socket.io-client';
-
+import ChatContact from "../components/ChatContact";
+import ChatSheet from "../components/ChatSheet";
+import { allUsersRoute } from "../utilities/APIRoutes";
+import { io } from "socket.io-client";
 
 const Chat = () => {
+  const socket = useRef();
+  // eslint-disable-next-line
+  const [currentUser, SetCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("Chat-App-User"))
+  );
+  const [contacts, setContacts] = useState([]);
+  const [currentChatUser, setCurrentChatUser] = useState(undefined);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-    const socket = useRef();
-    // eslint-disable-next-line
-    const [currentUser, SetCurrentUser] = useState(JSON.parse(localStorage.getItem('Chat-App-User')));
-    const [contacts, setContacts] = useState([]);
-    const [currentChatUser, setCurrentChatUser] = useState(undefined);
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
+  // console.log(currentUser);
+  //check user is availe or not
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, []);
 
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io("https://chat-application-server-g5d5.onrender.com");
+      socket.current.emit("add-user", currentUser._id);
+    }
+  }, [currentUser]);
 
-    // console.log(currentUser);
-    //check user is availe or not
-    useEffect(() => {
-        if (!currentUser) {
-            navigate('/login');
-        }
-    }, []);
+  useEffect(() => {
+    // declare the data fetching function
+    const fetchData = async () => {
+      if (currentUser && currentUser.isProfileImageSet) {
+        const { data } = await axios.get(
+          `${allUsersRoute}/${currentUser._id}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("Chat-token")}`,
+              email: currentUser.email,
+            },
+          }
+        );
 
+        setContacts(data);
+        setLoading(false);
+      } else {
+        navigate("/profile");
+      }
+    };
+    // call the function
+    fetchData().catch(console.error);
+  }, [currentUser, loading]);
 
-    useEffect(() => {
-        if (currentUser) {
-            socket.current = io('http://localhost:5000');
-            socket.current.emit("add-user", currentUser._id);
-        }
-    }, [currentUser]);
-
-
-    useEffect(() => {
-        // declare the data fetching function
-        const fetchData = async () => {
-
-            if (currentUser && currentUser.isProfileImageSet) {
-                const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`, {
-                    headers: {
-                        authorization: `Bearer ${localStorage.getItem('Chat-token')}`,
-                        email: currentUser.email,
-                    }
-                });
-                console.log(data);
-                setContacts(data);
-                setLoading(false);
-            } else {
-                navigate('/profile');
-            }
-        };
-        // call the function
-        fetchData()
-            // make sure to catch any error
-            .catch(console.error);
-    }, [currentUser, loading]);
-
-
-    return (
-        <>
-            {loading ?
-
-                <Container>
-                    <h1 className='loading'>loading....</h1>
-                </Container> :
-
-                <Container>
-                    <div className="container">
-                        <ChatContact currentUser={currentUser} setCurrentChatUser={setCurrentChatUser} contacts={contacts} />
-                        {
-                            currentChatUser &&
-                            <ChatSheet currentChatUser={currentChatUser} currentUser={currentUser} socket={socket} />
-                        }
-                    </div>
-                </Container>
-            }
-        </>
-    );
+  return (
+    <>
+      {loading ? (
+        <Container>
+          <h1 className="loading">loading....</h1>
+        </Container>
+      ) : (
+        <Container>
+          <div className="container">
+            <ChatContact
+              currentUser={currentUser}
+              setCurrentChatUser={setCurrentChatUser}
+              contacts={contacts}
+            />
+            {currentChatUser && (
+              <ChatSheet
+                currentChatUser={currentChatUser}
+                currentUser={currentUser}
+                socket={socket}
+              />
+            )}
+          </div>
+        </Container>
+      )}
+    </>
+  );
 };
 
 export default Chat;
@@ -105,7 +107,7 @@ const Container = styled.div`
     }
   }
 
-  .loading{
-    color: white
-}
+  .loading {
+    color: white;
+  }
 `;

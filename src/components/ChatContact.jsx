@@ -83,7 +83,7 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
                     onClick={() => changeUserId(ind, contact)}
                   >
                     <div className='avatar'>
-                      <img src={`data:image/svg+xml;base64,${contact.profileImage}`} alt="" />
+                      <img src={contact.profileImage} alt="" />
                     </div>
                     <div className='username'>
                       <h3>{contact.userName}</h3>
