@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/-mern-stack-chat-application-client-side/precache-manifest.19451044f9da310be5c670e8cb150b43.js"
+  "/-mern-stack-chat-application-client-side/precache-manifest.352c43603a33e67055c7a8cef876dc56.js"
 );
 
 workbox.clientsClaim();
