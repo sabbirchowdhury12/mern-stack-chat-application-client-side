@@ -1,66 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styled from "styled-components";
-import { IoSettingsSharp } from 'react-icons/io5';
-import CurrentUserInfo from './CurrentUserInfo';
-
-
+import { IoSettingsSharp } from "react-icons/io5";
+import CurrentUserInfo from "./CurrentUserInfo";
 
 const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
-
   // const [currentUserName, setCurrentUserName] = useState(undefined);
   // const [currentUserProfile, setCurrentUserProfile] = useState('');
   const [selectedUser, setSelectedUser] = useState(undefined);
   const [hidden, setHidden] = useState(false);
-  // console.log(hidden);
-
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await JSON.parse(
-  //       localStorage.getItem('Chat-App-User')
-  //     );
-  //     setCurrentUserName(data.userName);
-  //     setCurrentUserProfile(data.profileImage);
-
-  //   };
-  //   // call the function
-  //   fetchData()
-  //     // make sure to catch any error
-  //     .catch(console.error);
-
-  // }, []);
-
+  const [searchContact, setSearchContanct] = useState("");
 
   const changeUserId = (ind, contact) => {
     setSelectedUser(ind);
     setCurrentChatUser(contact);
   };
-  // const changeCurrentChat = (index, contact) => {
-  //   setCurrentSelected(index);
-  //   changeChat(contact);
-  // };
+
+  // Filter contacts based on search input
+  const filteredContacts = contacts.filter((contact) =>
+    contact.userName.toLowerCase().includes(searchContact.toLowerCase())
+  );
 
   return (
     <>
-      {
-        currentUser &&
+      {currentUser && (
         <Container>
-          <div className='profile'>
+          <div className="profile">
             <div className="header">
               <h2>CHAT APP</h2>
-              <label onClick={() => setHidden(!hidden)}><IoSettingsSharp className='icon' color='white' size={20} /></label>
+              <label onClick={() => setHidden(!hidden)}>
+                <IoSettingsSharp className="icon" color="white" size={20} />
+              </label>
             </div>
             <div className="brand">
-
               <div className="current-user">
                 <div className="avatar">
-                  <img
-                    src={currentUser.profileImage}
-                    alt="avatar"
-                  />
+                  <img src={currentUser.profileImage} alt="avatar" />
                 </div>
-
               </div>
               <div className="username">
                 <h3>{currentUser.userName}</h3>
@@ -69,37 +44,34 @@ const ChatContact = ({ contacts, setCurrentChatUser, currentUser }) => {
             <form className="input-container">
               <input
                 type="text"
+                onChange={(e) => setSearchContanct(e.target.value)}
                 placeholder="search"
               />
-
             </form>
           </div>
           <div className="contacts">
-            {
-              contacts.map((contact, ind) => {
-                return (
-                  <div className={`contact ${ind === selectedUser ? "selected" : undefined}`}
-                    key={contact._id}
-                    onClick={() => changeUserId(ind, contact)}
-                  >
-                    <div className='avatar'>
-                      <img src={contact.profileImage} alt="" />
-                    </div>
-                    <div className='username'>
-                      <h3>{contact.userName}</h3>
-                    </div>
-                    {
-                      hidden &&
-                      <CurrentUserInfo currentUser={currentUser} />
-
-                    }
+            {filteredContacts.map((contact, ind) => {
+              return (
+                <div
+                  className={`contact ${
+                    ind === selectedUser ? "selected" : undefined
+                  }`}
+                  key={contact._id}
+                  onClick={() => changeUserId(ind, contact)}
+                >
+                  <div className="avatar">
+                    <img src={contact.profileImage} alt="" />
                   </div>
-                );
-              })
-            }
+                  <div className="username">
+                    <h3>{contact.userName}</h3>
+                  </div>
+                  {hidden && <CurrentUserInfo currentUser={currentUser} />}
+                </div>
+              );
+            })}
           </div>
         </Container>
-      }
+      )}
     </>
   );
 };
@@ -108,31 +80,32 @@ export default ChatContact;
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 25% 75% ;
+  grid-template-rows: 25% 75%;
   overflow: hidden;
+  padding-bottom: 30px;
   gap: 2rem;
   background-color: #181823;
   position: relative;
-  .profile{
+  .profile {
     padding: 0.4rem;
     //  background-color: ;;
     padding: 0px;
   }
-  .header{
+  .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
     gap: 20px;
 
-    h2{
-      color: white
+    h2 {
+      color: white;
     }
   }
-  p{
+  p {
     text-align: center;
     padding: 1rem;
-    color: white
+    color: white;
   }
   .input-container {
     margin: 1rem 0;
@@ -158,8 +131,7 @@ const Container = styled.div`
       }
     }
   }
-   
-      
+
   .brand {
     display: flex;
     align-items: center;
@@ -172,8 +144,6 @@ const Container = styled.div`
       color: white;
       text-transform: uppercase;
     }
-
-    
   }
   .contacts {
     display: flex;
@@ -212,7 +182,7 @@ const Container = styled.div`
       }
     }
     .selected {
-      background-color: #537FE7;
+      background-color: #537fe7;
     }
   }
   .current-user {
@@ -228,7 +198,7 @@ const Container = styled.div`
     }
     .username {
       dispaly: flex;
-    
+
       h2 {
         color: white;
       }

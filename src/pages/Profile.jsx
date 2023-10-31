@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import { setProfileRoute } from "../utilities/APIRoutes";
+import { setProfileRoute } from "../utils/APIRoutes";
 import { useNavigate } from "react-router-dom";
+import loader from "../assets/loader.gif";
 
 const Profile = () => {
   const [profiles, setProfiles] = useState([]);
@@ -72,6 +73,7 @@ const Profile = () => {
     <div>
       {isLoading ? (
         <Container>
+          <img src={loader} alt="" srcSet="" />
           <h1>loading....</h1>
         </Container>
       ) : (

@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ChatContact from "../components/ChatContact";
 import ChatSheet from "../components/ChatSheet";
-import { allUsersRoute } from "../utilities/APIRoutes";
+import { allUsersRoute } from "../utils/APIRoutes";
 import { io } from "socket.io-client";
+import img from "../assets/hi.gif";
+import loader from "../assets/loading.gif";
 
 const Chat = () => {
   const socket = useRef();
@@ -28,7 +30,7 @@ const Chat = () => {
 
   useEffect(() => {
     if (currentUser) {
-      socket.current = io("https://chat-application-server-g5d5.onrender.com");
+      socket.current = io("http://localhost:5000");
       socket.current.emit("add-user", currentUser._id);
     }
   }, [currentUser]);
@@ -61,7 +63,8 @@ const Chat = () => {
     <>
       {loading ? (
         <Container>
-          <h1 className="loading">loading....</h1>
+          <img src={loader} alt="" srcSet="" />
+          <h1 className={"loading"}>loading....</h1>
         </Container>
       ) : (
         <Container>
@@ -71,12 +74,18 @@ const Chat = () => {
               setCurrentChatUser={setCurrentChatUser}
               contacts={contacts}
             />
-            {currentChatUser && (
+            {currentChatUser ? (
               <ChatSheet
                 currentChatUser={currentChatUser}
                 currentUser={currentUser}
                 socket={socket}
               />
+            ) : (
+              <div className="chat-image">
+                {" "}
+                <p>select one for chat</p>
+                <img src={img} height={300} alt="" />
+              </div>
             )}
           </div>
         </Container>
@@ -104,6 +113,19 @@ const Container = styled.div`
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;
+    }
+  }
+
+  .chat-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+
+    p {
+      color: #fff;
+      margin-bottom: 20px;
     }
   }
 

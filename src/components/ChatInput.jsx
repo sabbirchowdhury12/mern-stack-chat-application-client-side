@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsEmojiSmileFill } from "react-icons/bs";
-import { IoMdSend } from 'react-icons/io';
+import { IoMdSend } from "react-icons/io";
 import Picker from "emoji-picker-react";
 import { TfiGallery } from "react-icons/tfi";
 import { TbThumbUpFilled } from "react-icons/tb";
 
 const ChatInput = ({ handleSendMessage }) => {
-
   const [emojPicker, setEmojPicker] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleEmojPicker = async () => {
     setEmojPicker(!emojPicker);
@@ -27,27 +26,25 @@ const ChatInput = ({ handleSendMessage }) => {
     e.preventDefault();
     if (message.length > 0) {
       handleSendMessage(message);
-      setMessage('');
+      setMessage("");
     }
   };
-
-
 
   return (
     <Container>
       <div className="button-container">
         <div className="emoji">
-
           <BsEmojiSmileFill onClick={handleEmojPicker} />
-          {
-            emojPicker && <Picker onEmojiClick={handleEmojiMessage} />
-          }
+          {emojPicker && <Picker onEmojiClick={handleEmojiMessage} />}
         </div>
       </div>
-      <div className='gallery'>
+      <div className="gallery">
         <TfiGallery size={20} />
       </div>
-      <form className="input-container" onSubmit={(e) => handleSubmitMessage(e)}>
+      <form
+        className="input-container"
+        onSubmit={(e) => handleSubmitMessage(e)}
+      >
         <input
           type="text"
           placeholder="type your message here"
@@ -58,20 +55,20 @@ const ChatInput = ({ handleSendMessage }) => {
           <IoMdSend />
         </button>
       </form>
-      <div className='thumb'>
+      <div className="thumb" onClick={() => handleSendMessage("👍")}>
         <TbThumbUpFilled size={30} />
       </div>
-    </Container >
+    </Container>
   );
 };
 
 const Container = styled.div`
-display: grid;
-align-items: center;
-grid-template-columns: 5% 5% 85% 5%;
-background-color: #080420;
-padding: 0 2rem;
-@media screen and (min-width: 720px) and (max-width: 1080px) {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 5% 5% 85% 5%;
+  background-color: #080420;
+  padding: 0 2rem;
+  @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0rem 1rem;
     gap: 1rem;
   }
@@ -86,10 +83,10 @@ padding: 0 2rem;
       position: relative;
       svg {
         font-size: 1.4rem;
-        color: #C0EEF2;
+        color: #c0eef2;
         cursor: pointer;
       }
-      .EmojiPickerReact  {
+      .EmojiPickerReact {
         position: absolute;
         top: -500px;
         background-color: #080420;
@@ -118,13 +115,13 @@ padding: 0 2rem;
     }
   }
 
-  .gallery{
-    color: #C0EEF2;
+  .gallery {
+    color: #c0eef2;
   }
-.thumb{
-  color: #FFC83D;
-  margin-left: 10px;
-}
+  .thumb {
+    color: #ffc83d;
+    margin-left: 10px;
+  }
   .input-container {
     width: 100%;
     border-radius: 2rem;
@@ -152,7 +149,7 @@ padding: 0 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #C0EEF2;
+      background-color: #c0eef2;
       border: none;
       @media screen and (min-width: 720px) and (max-width: 1080px) {
         padding: 0.3rem 1rem;
@@ -169,4 +166,3 @@ padding: 0 2rem;
 `;
 
 export default ChatInput;
-

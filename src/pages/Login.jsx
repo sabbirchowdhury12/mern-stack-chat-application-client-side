@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { jwt, loginRoute } from "../utilities/APIRoutes";
+import { jwt, loginRoute } from "../utils/APIRoutes";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

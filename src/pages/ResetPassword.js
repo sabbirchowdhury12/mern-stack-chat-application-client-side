@@ -1,75 +1,79 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import { resetPasswordRoute } from '../utilities/APIRoutes';
+import axios from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { resetPasswordRoute } from "../utils/APIRoutes";
 
 const ResetPassword = ({ email }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const handlePassword = async (data) => {
+    const { otp, password, confirmPassword } = data;
+    console.log(otp, password, email);
 
+    if (password !== confirmPassword) {
+      setError("password and confirm password must be same");
+      return;
+    }
+    const { data: result } = await axios.post(resetPasswordRoute, {
+      email,
+      password,
+      otp,
+    });
+    if (result.status === true) {
+      toast.success(result.message);
+      navigate("/login");
+    }
 
-    const handlePassword = async (data) => {
-        const { otp, password, confirmPassword } = data;
-        console.log(otp, password, email);
+    if (result.status === false) {
+      toast.error(result.message);
+    }
+  };
+  return (
+    <form onSubmit={handleSubmit(handlePassword)}>
+      <div className="brand">
+        {/* // <img src={logo} alt="" /> */}
+        <h2>CHAT APP</h2>
+      </div>
+      <input
+        {...register("otp", {
+          required: true,
+        })}
+        type="otp"
+        placeholder="OTP"
+        name="otp"
+      />
+      {errors.otp && <p>OTP is required</p>}
+      <input
+        {...register("password", {
+          required: true,
+        })}
+        type="password"
+        placeholder="Password"
+        name="password"
+      />
+      {errors.email && <p>email is required</p>}
+      <input
+        {...register("confirmPassword", {
+          required: true,
+        })}
+        type="password"
+        placeholder="Confirm Password"
+        name="confirmPassword"
+      />
+      {errors.confirmPassword && <p>Confirm Password is required</p>}
+      <p>{error}</p>
 
-        if (password !== confirmPassword) {
-            setError('password and confirm password must be same');
-            return;
-        }
-        const { data: result } = await axios.post(resetPasswordRoute, {
-            email, password, otp
-        });
-        if (result.status === true) {
-            toast.success(result.message);
-            navigate('/login');
-        }
-
-        if (result.status === false) {
-            toast.error(result.message);
-        }
-    };
-    return (
-
-        <form onSubmit={handleSubmit(handlePassword)}>
-            <div className="brand">
-                {/* // <img src={logo} alt="" /> */}
-                <h2>CHAT APP</h2>
-            </div>
-            <input
-                {
-                ...register('otp', {
-                    required: true
-                })
-                }
-                type="otp" placeholder='OTP' name='otp' />
-            {errors.otp && <p>OTP is required</p>}
-            <input
-                {
-                ...register('password', {
-                    required: true
-                })
-                }
-                type="password" placeholder='Password' name='password' />
-            {errors.email && <p>email is required</p>}
-            <input
-                {
-                ...register('confirmPassword', {
-                    required: true
-                })
-                }
-                type="password" placeholder='Confirm Password' name='confirmPassword' />
-            {errors.confirmPassword && <p>Confirm Password is required</p>}
-            <p>{error}</p>
-
-            <button type='submit'> Change Password</button>
-        </form>
-
-
-    );
+      <button type="submit"> Change Password</button>
+    </form>
+  );
 };
 
 export default ResetPassword;
