@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/-mern-stack-chat-application-client-side/precache-manifest.352c43603a33e67055c7a8cef876dc56.js"
+  "/mern-stack-chat-application-client-side/precache-manifest.d5c89d140d43d0e38035559262821952.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/-mern-stack-chat-application-client-side/index.html", {
+workbox.routing.registerNavigationRoute("/mern-stack-chat-application-client-side/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });

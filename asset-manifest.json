@@ -1,13 +1,16 @@
 {
-  "main.css": "/-mern-stack-chat-application-client-side/static/css/main.40a58954.chunk.css",
-  "main.js": "/-mern-stack-chat-application-client-side/static/js/main.5568dcad.chunk.js",
-  "main.js.map": "/-mern-stack-chat-application-client-side/static/js/main.5568dcad.chunk.js.map",
-  "static/js/1.ffca8417.chunk.js": "/-mern-stack-chat-application-client-side/static/js/1.ffca8417.chunk.js",
-  "static/js/1.ffca8417.chunk.js.map": "/-mern-stack-chat-application-client-side/static/js/1.ffca8417.chunk.js.map",
-  "runtime~main.js": "/-mern-stack-chat-application-client-side/static/js/runtime~main.e0944168.js",
-  "runtime~main.js.map": "/-mern-stack-chat-application-client-side/static/js/runtime~main.e0944168.js.map",
-  "static/css/main.40a58954.chunk.css.map": "/-mern-stack-chat-application-client-side/static/css/main.40a58954.chunk.css.map",
-  "index.html": "/-mern-stack-chat-application-client-side/index.html",
-  "precache-manifest.352c43603a33e67055c7a8cef876dc56.js": "/-mern-stack-chat-application-client-side/precache-manifest.352c43603a33e67055c7a8cef876dc56.js",
-  "service-worker.js": "/-mern-stack-chat-application-client-side/service-worker.js"
+  "main.css": "/mern-stack-chat-application-client-side/static/css/main.53735062.chunk.css",
+  "main.js": "/mern-stack-chat-application-client-side/static/js/main.982f72a4.chunk.js",
+  "main.js.map": "/mern-stack-chat-application-client-side/static/js/main.982f72a4.chunk.js.map",
+  "static/js/1.1daf0c2f.chunk.js": "/mern-stack-chat-application-client-side/static/js/1.1daf0c2f.chunk.js",
+  "static/js/1.1daf0c2f.chunk.js.map": "/mern-stack-chat-application-client-side/static/js/1.1daf0c2f.chunk.js.map",
+  "runtime~main.js": "/mern-stack-chat-application-client-side/static/js/runtime~main.2751a7a4.js",
+  "runtime~main.js.map": "/mern-stack-chat-application-client-side/static/js/runtime~main.2751a7a4.js.map",
+  "static/media/hi.gif": "/mern-stack-chat-application-client-side/static/media/hi.575a2091.gif",
+  "static/media/loading.gif": "/mern-stack-chat-application-client-side/static/media/loading.ff1f2c20.gif",
+  "static/media/loader.gif": "/mern-stack-chat-application-client-side/static/media/loader.e1a4f272.gif",
+  "static/css/main.53735062.chunk.css.map": "/mern-stack-chat-application-client-side/static/css/main.53735062.chunk.css.map",
+  "index.html": "/mern-stack-chat-application-client-side/index.html",
+  "precache-manifest.d5c89d140d43d0e38035559262821952.js": "/mern-stack-chat-application-client-side/precache-manifest.d5c89d140d43d0e38035559262821952.js",
+  "service-worker.js": "/mern-stack-chat-application-client-side/service-worker.js"
 }
