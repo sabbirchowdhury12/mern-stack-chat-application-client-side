@@ -15,9 +15,9 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  //register
   const handleRegister = async (data) => {
     const { userName, email, password, confirmPassword } = data;
-    // console.log(userName, email, password, confirmPassword);
     //handle password and confirm password
     if (password !== confirmPassword) {
       setError("Password and Confirm Password must be same");
@@ -30,8 +30,6 @@ const Register = () => {
       email,
       password,
     });
-
-    // console.log(result);
 
     if (result.status === false) {
       setError(result.message);
@@ -92,7 +90,7 @@ const Register = () => {
           {errors.confirmPassword && <p>Confirm Password is Required</p>}
           <p>{error}</p>
 
-          <button type="submit"> Create User</button>
+          <button type="submit"> Create Account</button>
           <span>
             Already have an account? Please <Link to="/login">Login</Link>
           </span>

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { jwt, loginRoute } from "../utils/APIRoutes";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { loginRoute } from "../utils/APIRoutes";
 
 const Login = () => {
   const {
@@ -16,13 +16,14 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  //get local storage item
+  //get user from local storage
   useEffect(() => {
     if (localStorage.getItem("Chat-App-User")) {
       navigate("/");
     }
   }, []);
 
+  //handle login
   const handleLogin = async (data) => {
     const { userName, password } = data;
     const { data: result } = await axios.post(loginRoute, {
@@ -37,31 +38,8 @@ const Login = () => {
       setError("");
       toast.success("login seccuss");
       localStorage.setItem("Chat-App-User", JSON.stringify(result.person));
-      handleJWT(result.person.userName, result.person.email);
       navigate("/profile");
     }
-  };
-
-  const handleJWT = (name, email) => {
-    axios
-      .post(
-        jwt,
-        {
-          name,
-          email,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((result) => {
-        localStorage.setItem("Chat-token", result.data.token);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   return (
