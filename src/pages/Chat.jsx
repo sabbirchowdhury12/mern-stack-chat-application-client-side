@@ -30,7 +30,7 @@ const Chat = () => {
 
   useEffect(() => {
     if (currentUser) {
-      socket.current = io("http://localhost:5000");
+      socket.current = io("https://chat-application-server-g5d5.onrender.com");
       socket.current.emit("add-user", currentUser._id);
     }
   }, [currentUser]);

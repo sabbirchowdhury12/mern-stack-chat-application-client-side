@@ -1,4 +1,4 @@
-export const host = "http://localhost:5000";
+export const host = "https://chat-application-server-g5d5.onrender.com";
 export const jwt = `${host}/jwt`;
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
