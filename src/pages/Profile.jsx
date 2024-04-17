@@ -70,42 +70,35 @@ const Profile = () => {
   }, []);
 
   return (
-    <div>
-      {!profiles.length ? (
-        <Container>
-          <img src={loader} alt="" srcSet="" />
-          <h1>loading....</h1>
-        </Container>
-      ) : (
-        <Container>
-          <div className="title-container">
-            <h2>select your profile</h2>
-          </div>
-          <div className="avatars">
-            {profiles.map((profle, ind) => {
-              return (
-                <div
-                  key={ind}
-                  className={`avatar ${
-                    selectedProfile === ind ? "selected" : undefined
-                  }`}
-                >
-                  <img
-                    src={profle}
-                    alt="avatar"
-                    onClick={() => setSeletedProfile(ind)}
-                  />
-                </div>
-              );
-            })}
-          </div>
+    <>
+      <Container>
+        <div className="title-container">
+          <h2>select your profile</h2>
+        </div>
+        <div className="avatars">
+          {profiles.map((profle, ind) => {
+            return (
+              <div
+                key={ind}
+                className={`avatar ${
+                  selectedProfile === ind ? "selected" : undefined
+                }`}
+              >
+                <img
+                  src={profle}
+                  alt="avatar"
+                  onClick={() => setSeletedProfile(ind)}
+                />
+              </div>
+            );
+          })}
+        </div>
 
-          <button className="submit-btn" onClick={setProfile}>
-            Add Profile
-          </button>
-        </Container>
-      )}
-    </div>
+        <button className="submit-btn" onClick={setProfile}>
+          Add Profile
+        </button>
+      </Container>
+    </>
   );
 };
 

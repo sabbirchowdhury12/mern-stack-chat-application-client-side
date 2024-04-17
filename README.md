@@ -7,3 +7,15 @@ porject link: [https://youtu.be/ejxl5R3HOAc](https://youtu.be/ejxl5R3HOAc)
 Live: [https://mern-stack-chat-app.netlify.app](https://mern-stack-chat-app.netlify.app).
 
 server repo: [https://github.com/sabbirchowdhury12/mern-stack-chat-application-server-side](https://github.com/sabbirchowdhury12/mern-stack-chat-application-server-side)
+
+#### user account
+
+## 1
+
+- username: sabbir
+- password: ffffff
+
+## 2
+
+- username: mehu
+- password: ffffff
