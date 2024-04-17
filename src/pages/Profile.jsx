@@ -11,7 +11,7 @@ import loader from "../assets/loader.gif";
 const Profile = () => {
   const [profiles, setProfiles] = useState([]);
   const [selectedProfile, setSeletedProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   // check user available or not
@@ -65,13 +65,13 @@ const Profile = () => {
         imageData.push(data);
       }
       setProfiles(imageData);
-      setIsLoading(false);
+      // setIsLoading(false);
     };
   }, []);
 
   return (
     <div>
-      {isLoading ? (
+      {!profiles.length ? (
         <Container>
           <img src={loader} alt="" srcSet="" />
           <h1>loading....</h1>
@@ -101,7 +101,7 @@ const Profile = () => {
           </div>
 
           <button className="submit-btn" onClick={setProfile}>
-            Add a Profile
+            Add Profile
           </button>
         </Container>
       )}

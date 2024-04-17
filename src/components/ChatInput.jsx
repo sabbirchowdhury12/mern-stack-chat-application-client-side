@@ -15,10 +15,8 @@ const ChatInput = ({ handleSendMessage }) => {
   };
 
   const handleEmojiMessage = async (emoji) => {
-    console.log(message);
     let emojis = message;
     emojis += emoji.emoji;
-    console.log(emojis);
     setMessage(emojis);
   };
 
