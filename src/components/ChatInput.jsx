@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
@@ -9,16 +9,34 @@ import { TbThumbUpFilled } from "react-icons/tb";
 const ChatInput = ({ handleSendMessage }) => {
   const [emojPicker, setEmojPicker] = useState(false);
   const [message, setMessage] = useState("");
+  const emojiPickerRef = useRef(null);
 
-  const handleEmojPicker = async () => {
+  const handleEmojPicker = () => {
     setEmojPicker(!emojPicker);
   };
 
-  const handleEmojiMessage = async (emoji) => {
+  // Handle emoji selection
+  const handleEmojiMessage = (emoji) => {
     let emojis = message;
     emojis += emoji.emoji;
     setMessage(emojis);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target)
+      ) {
+        setEmojPicker(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [emojiPickerRef]);
 
   const handleSubmitMessage = (e) => {
     e.preventDefault();
@@ -33,7 +51,11 @@ const ChatInput = ({ handleSendMessage }) => {
       <div className="button-container">
         <div className="emoji">
           <BsEmojiSmileFill onClick={handleEmojPicker} />
-          {emojPicker && <Picker onEmojiClick={handleEmojiMessage} />}
+          {emojPicker && (
+            <div ref={emojiPickerRef}>
+              <Picker onEmojiClick={handleEmojiMessage} />
+            </div>
+          )}
         </div>
       </div>
       <div className="gallery">

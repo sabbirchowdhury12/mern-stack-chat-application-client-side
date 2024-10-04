@@ -5,9 +5,11 @@ import { useForm } from "react-hook-form";
 import { registerRoute } from "../utils/APIRoutes";
 import toast from "react-hot-toast";
 import axios from "axios";
+import Loading from "../components/loader";
 
 const Register = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -17,6 +19,7 @@ const Register = () => {
 
   //register
   const handleRegister = async (data) => {
+    setLoading(true);
     const { userName, email, password, confirmPassword } = data;
     //handle password and confirm password
     if (password !== confirmPassword) {
@@ -32,9 +35,11 @@ const Register = () => {
     });
 
     if (result.status === false) {
+      setLoading(false);
       setError(result.message);
     }
     if (result.status === true) {
+      setLoading(false);
       setError("");
       toast.success("register success");
       localStorage.setItem("Chat-App-User", JSON.stringify(result.user));
@@ -90,7 +95,18 @@ const Register = () => {
           {errors.confirmPassword && <p>Confirm Password is Required</p>}
           <p>{error}</p>
 
-          <button type="submit"> Create Account</button>
+          <button disabled={loading} className="w-full">
+            {loading ? (
+              <>
+                {"Login"}
+                <p>
+                  <Loading />
+                </p>
+              </>
+            ) : (
+              "Login"
+            )}
+          </button>
           <span>
             Already have an account? Please <Link to="/login">Login</Link>
           </span>
@@ -145,6 +161,10 @@ const FromContainer = styled.div`
     }
   }
   button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     background-color: #537fe7;
     color: white;
     padding: 1rem 2rem;

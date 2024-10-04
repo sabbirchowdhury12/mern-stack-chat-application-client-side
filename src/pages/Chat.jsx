@@ -6,7 +6,7 @@ import ChatContact from "../components/ChatContact";
 import ChatSheet from "../components/ChatSheet";
 import { allUsersRoute } from "../utils/APIRoutes";
 import { io } from "socket.io-client";
-import img from "../assets/hi.gif";
+import img1 from "../assets/hi.gif";
 import loader from "../assets/loading.gif";
 
 const Chat = () => {
@@ -30,8 +30,10 @@ const Chat = () => {
 
   useEffect(() => {
     if (currentUser) {
-      socket.current = io("https://chat-application-server-g5d5.onrender.com");
-      socket.current.emit("add-user", currentUser._id);
+      socket.current = io(
+        "https://mern-stack-chat-application-server-side-1.onrender.com"
+      );
+      socket.current.emit("add-user", currentUser._id); // Emit the current user's ID
     }
   }, [currentUser]);
 
@@ -84,7 +86,7 @@ const Chat = () => {
               <div className="chat-image">
                 {" "}
                 <p>select one for chat</p>
-                <img src={img} height={300} alt="" />
+                <img src={img1} height={300} alt="" />
               </div>
             )}
           </div>

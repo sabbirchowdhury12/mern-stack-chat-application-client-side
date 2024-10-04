@@ -68,6 +68,7 @@ const Container = styled.div`
   background: white;
   padding: 1rem;
   text-align: center;
+  border-radius: 10px;
   .avatar {
     img {
       height: 3rem;

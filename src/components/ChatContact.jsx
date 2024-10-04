@@ -173,6 +173,8 @@ const Container = styled.div`
       .avatar {
         img {
           height: 3rem;
+          width: 3rem;
+          border-radius: 50%;
         }
       }
       .username {
@@ -193,6 +195,8 @@ const Container = styled.div`
     .avatar {
       img {
         height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
         max-inline-size: 100%;
       }
     }

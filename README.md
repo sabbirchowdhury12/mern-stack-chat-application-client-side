@@ -4,7 +4,7 @@ this is my mern stack chat application. For use socket.io after hosting it gives
 
 porject link: [https://youtu.be/ejxl5R3HOAc](https://youtu.be/ejxl5R3HOAc)
 
-Live: [https://mern-stack-chat-app.netlify.app](https://mern-stack-chat-app.netlify.app).
+Live: [https://chat-app-sabbirchowdhury12.vercel.app](https://chat-app-sabbirchowdhury12.vercel.app).
 
 server repo: [https://github.com/sabbirchowdhury12/mern-stack-chat-application-server-side](https://github.com/sabbirchowdhury12/mern-stack-chat-application-server-side)
 
@@ -13,9 +13,9 @@ server repo: [https://github.com/sabbirchowdhury12/mern-stack-chat-application-s
 ## 1
 
 - username: sabbir
-- password: ffffff
+- password: 123456
 
 ## 2
 
-- username: mehu
-- password: ffffff
+- username: pranto
+- password: 123456

@@ -6,8 +6,10 @@ import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { loginRoute } from "../utils/APIRoutes";
+import Loading from "../components/loader";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -25,16 +27,18 @@ const Login = () => {
 
   //handle login
   const handleLogin = async (data) => {
+    setLoading(true);
     const { userName, password } = data;
     const { data: result } = await axios.post(loginRoute, {
       userName,
       password,
     });
-
     if (result.status === false) {
+      setLoading(false);
       setError(result.message);
     }
     if (result.status === true) {
+      setLoading(false);
       setError("");
       toast.success("login seccuss");
       localStorage.setItem("Chat-App-User", JSON.stringify(result.person));
@@ -76,7 +80,19 @@ const Login = () => {
             </Link>
           </p>
 
-          <button type="submit"> Login</button>
+          <button disabled={loading} className="w-full">
+            {loading ? (
+              <>
+                {"Login"}
+                <p>
+                  <Loading />
+                </p>
+              </>
+            ) : (
+              "Login"
+            )}
+          </button>
+          {/* <button type="submit"> Login</button> */}
           <span>
             Don't have any account? Please <Link to="/register">Register.</Link>
           </span>
@@ -140,6 +156,10 @@ const FromContainer = styled.div`
 
   button {
     // background-color: #4e0eff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     background-color: #537fe7;
     color: #c0eef2;
     padding: 1rem 2rem;

@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import { useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { getAllMsgRoute, sendMsgRoute } from "../utils/APIRoutes";
 import ChatInput from "./ChatInput";
@@ -12,7 +11,9 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
   const [allMessage, setAllMessage] = useState([]);
   const [arrivalMessage, setArraivalMessage] = useState(null);
   const [hidden, setHidden] = useState(false);
+  const lastMessageRef = useRef(null);
 
+  // Fetch all messages when currentChatUser changes
   useEffect(() => {
     const fetchData = async () => {
       const data = await JSON.parse(localStorage.getItem("Chat-App-User"));
@@ -27,15 +28,7 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
     fetchData().catch(console.error);
   }, [currentChatUser]);
 
-  useEffect(() => {
-    const getCurrentChat = async () => {
-      if (currentChatUser) {
-        await JSON.parse(localStorage.getItem("Chat-App-User"))._id;
-      }
-    };
-    getCurrentChat();
-  }, [currentChatUser]);
-
+  // Handle sending message
   const handleSendMessage = async (msg) => {
     const data = await JSON.parse(localStorage.getItem("Chat-App-User"));
 
@@ -51,78 +44,73 @@ const ChatSheet = ({ currentChatUser, currentUser, socket }) => {
       message: msg,
     });
 
-    const messages = [...allMessage];
-    messages.push({ mySelf: true, message: msg });
-    setAllMessage(messages);
+    setAllMessage((prev) => [...prev, { mySelf: true, message: msg }]);
   };
 
+  // Listen for received messages (added logging for debugging)
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-recived", (msg) => {
+        console.log("Message received from server:", msg); // Debug message reception
         setArraivalMessage({ mySelf: false, message: msg });
       });
     }
-  }, []);
+  }, [socket.current]); // Ensures listener is set when socket changes
 
+  // Append arrivalMessage to all messages when a new message is received
   useEffect(() => {
-    arrivalMessage && setAllMessage((prev) => [...prev, arrivalMessage]);
+    if (arrivalMessage) {
+      setAllMessage((prevMessages) => [...prevMessages, arrivalMessage]);
+    }
   }, [arrivalMessage]);
 
-  const lastMessageRef = useRef(null);
+  // Scroll to the latest message when allMessage or arrivalMessage changes
   useEffect(() => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [arrivalMessage, allMessage]);
+  }, [allMessage, arrivalMessage]);
 
   return (
-    <>
-      {currentChatUser === undefined ? (
-        "hi"
-      ) : (
-        <Container>
-          <div className="chat-header">
-            <div className="user-details">
-              <div className="avatar">
-                <img src={currentChatUser.profileImage} alt="" />
-              </div>
-              <div className="username">
-                <h3>{currentChatUser.userName}</h3>
-              </div>
-            </div>
+    <Container>
+      <div className="chat-header">
+        <div className="user-details">
+          <div className="avatar">
+            <img src={currentChatUser.profileImage} alt="" />
+          </div>
+          <div className="username">
+            <h3>{currentChatUser.userName}</h3>
+          </div>
+        </div>
 
-            <div className="chat-icon">
-              <IoCall />
-              <IoVideocam />
-              <label onClick={() => setHidden(!hidden)}>
-                <HiOutlineDotsHorizontal />
-              </label>
-            </div>
-          </div>
-          <div className="chat-messages">
-            {allMessage.map((message, index) => {
-              const isLast = index === allMessage.length - 1; // Check if it's the last message
-              return (
-                <div key={index}>
-                  <div
-                    ref={isLast ? lastMessageRef : null}
-                    className={`message ${
-                      message.mySelf ? "sended" : "recieved"
-                    }`}
-                  >
-                    <div className="content ">
-                      <p>{message.message}</p>
-                    </div>
-                  </div>
+        <div className="chat-icon">
+          <IoCall />
+          <IoVideocam />
+          <label onClick={() => setHidden(!hidden)}>
+            <HiOutlineDotsHorizontal />
+          </label>
+        </div>
+      </div>
+      <div className="chat-messages">
+        {allMessage.map((message, index) => {
+          const isLast = index === allMessage.length - 1;
+          return (
+            <div key={index}>
+              <div
+                ref={isLast ? lastMessageRef : null}
+                className={`message ${message.mySelf ? "sended" : "recieved"}`}
+              >
+                <div className="content ">
+                  <p>{message.message}</p>
                 </div>
-              );
-            })}
-          </div>
-          {hidden && <ChatUserInfo currentChatUser={currentChatUser} />}
-          <ChatInput handleSendMessage={handleSendMessage}></ChatInput>
-        </Container>
-      )}
-    </>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {hidden && <ChatUserInfo currentChatUser={currentChatUser} />}
+      <ChatInput handleSendMessage={handleSendMessage}></ChatInput>
+    </Container>
   );
 };
 
@@ -149,6 +137,8 @@ const Container = styled.div`
       .avatar {
         img {
           height: 3rem;
+          width: 3rem;
+          border-radius: 50%;
         }
       }
       .username {

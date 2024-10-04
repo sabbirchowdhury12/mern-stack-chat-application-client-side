@@ -1,6 +1,9 @@
 {
   "name": "chat-app",
   "version": "0.1.0",
+  "engines": {
+    "node": "16.x"
+  },
   "private": true,
   "dependencies": {
     "@popperjs/core": "2.9.1",
