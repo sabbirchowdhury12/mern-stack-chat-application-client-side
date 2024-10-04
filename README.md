@@ -8,6 +8,12 @@ Live: [https://chat-app-sabbirchowdhury12.vercel.app](https://chat-app-sabbircho
 
 server repo: [https://github.com/sabbirchowdhury12/mern-stack-chat-application-server-side](https://github.com/sabbirchowdhury12/mern-stack-chat-application-server-side)
 
+- Enhanced security by safely storing user passwords with Bcrypt.
+- Implemented Nodemailer for sending email notifications for resetPassword.
+- Integrated Socket.io to enable real-time communication.
+- Implement random avatars to set a profile.
+- Designed an intuitive and visually appealing UI using styled-components, enhancing user engagement.
+
 #### user account
 
 ## 1
